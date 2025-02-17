@@ -14,7 +14,13 @@ await execaCommand(command, { cwd: 'tmp' });
 
 
 async function run(cmd: string) {
-  let promise = execaCommand(cmd, { cwd: 'tmp/my-app' });
+  console.info(`
+    -------------------------------------
+    Running: 
+      ${cmd}
+    -------------------------------------
+  `)
+  let promise = execaCommand(cmd, { cwd: 'tmp/my-app', stdio: 'inherit' });
 
   try {
     let result = await promise;

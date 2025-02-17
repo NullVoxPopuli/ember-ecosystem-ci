@@ -15,6 +15,8 @@ export interface Options {
   cli?: boolean;
   // true by default
   source?: boolean;
+  // false in CI, true out of CI
+  inheritIO?: boolean;
 }
 
 interface BuildResult {
@@ -27,6 +29,7 @@ function normalizeOptions(options: Options): Required<Options> {
     skipBuild: Boolean(SKIP_BUILD || options.skipBuild),
     cli: options.cli ?? true,
     source: options.source ?? true,
+    inheritIO: options.inheritIO ?? (process.env.CI ? false : true),
   }
 }
 
