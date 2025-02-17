@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import { readFile, cp } from 'node:fs/promises';
+import { readFile, cp, rm } from 'node:fs/promises';
 import type { Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
 import { prepare } from '#utils';
@@ -20,14 +20,28 @@ let { repo, setup, test, testDir, name } = json;
 
 let { source } = await prepare({ source: true });
 
-let cleanedName = name.replaceAll(/\s/g, '-');
+let cleanedName = name.replaceAll(/[\s/\\|%^*()]/g, '-');
 let dir = join(tmp, cleanedName);
+
+await rm(dir, { force: true, recursive: true });
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
 let setupResult = await run(setup, dir);
 
-
 let dirToTestIn = testDir ? join(dir, testDir) : dir;
+
+if (process.env.DEBUG) {
+  console.log({
+    tmp,
+    dir,
+    dirToTestIn,
+    repo,
+    testDir,
+    cleanedName,
+    source,
+  })
+}
+
 
 await cp(source.tgz, join(dirToTestIn, 'ember-source.tgz'));
 

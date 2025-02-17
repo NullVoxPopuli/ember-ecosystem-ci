@@ -45,10 +45,11 @@ export async function source(options: Options) {
     await $({ stdio: 'inherit', cwd: tmp })`git clone https://github.com/emberjs/ember.js.git ember-source`;
   }
 
-
-  if (!opts.skipBuild) {
-    await $({ stdio: 'inherit', cwd: dir })`pnpm install`;
-    await $({ stdio: 'inherit', cwd: dir })`node bin/build-for-publishing.js`;
+  if (!(await hasTGZ(dir))) {
+    if (!opts.skipBuild) {
+      await $({ stdio: 'inherit', cwd: dir })`pnpm install`;
+      await $({ stdio: 'inherit', cwd: dir })`node bin/build-for-publishing.js`;
+    }
   }
 
   let files = await readdir(dir);
@@ -77,9 +78,11 @@ export async function cli(options: Options) {
     await $({ stdio: 'inherit', cwd: tmp })`git clone https://github.com/ember-cli/ember-cli.git ember-cli`;
   }
 
-  if (!opts.skipBuild) {
-    await $({ stdio: 'inherit', cwd: dir })`pnpm install`;
-    await $({ stdio: 'inherit', cwd: dir })`pnpm pack`;
+  if (!(await hasTGZ(dir))) {
+    if (!opts.skipBuild) {
+      await $({ stdio: 'inherit', cwd: dir })`pnpm install`;
+      await $({ stdio: 'inherit', cwd: dir })`pnpm pack`;
+    }
   }
 
   let files = await readdir(dir);
@@ -97,6 +100,12 @@ export async function cli(options: Options) {
 }
 
 
+async function hasTGZ(dir: string) {
+  let files = await readdir(dir);
+  let matches = files.filter(x => x.endsWith('.tgz'));
+
+  return Boolean(matches[0]);
+}
 
 
 type If<Condition, WhenTrue> = Condition extends true ? WhenTrue : undefined;

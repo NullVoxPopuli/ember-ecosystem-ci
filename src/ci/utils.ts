@@ -17,13 +17,14 @@ export function logRun(cmd: string) {
 
 export async function run(cmd: string, inDir = 'tmp/my-project') {
   logRun(cmd);
-  let promise = execaCommand(cmd, { cwd: inDir, stdio: 'inherit' });
 
   try {
-    let result = await promise;
+    let result = await execaCommand(cmd, { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
+
 
     return result.exitCode === 0;
   } catch (e) {
+    console.error(e);
     return false;
   }
 }
