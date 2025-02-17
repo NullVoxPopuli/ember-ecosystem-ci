@@ -64,7 +64,7 @@ export async function source(options: Options) {
 
 export async function cli(options: Options) {
   let opts = normalizeOptions(options);
-  if (!opts.source) return;
+  if (!opts.cli) return;
 
   await mkdir(tmp, { recursive: true });
 
@@ -97,7 +97,7 @@ export async function cli(options: Options) {
 
 
 type If<Condition, WhenTrue> = Condition extends true ? WhenTrue : undefined;
-type BestCase<Fn extends (...args: any[]) => any> = NonNullable<Required<ReturnType<Fn>>>;
+// type BestCase<Fn extends (...args: any[]) => any> = NonNullable<Required<ReturnType<Fn>>>;
 
 
 export async function all<O extends Options>(options: O) {
@@ -107,8 +107,8 @@ export async function all<O extends Options>(options: O) {
   ]);
 
   return {
+    source: results[0] as If<O['source'], BuildResult>,
     cli: results[1] as If<O['cli'], BuildResult>,
-    source: results[0] as If<O['source'], BuildResult>
   };
 
 }

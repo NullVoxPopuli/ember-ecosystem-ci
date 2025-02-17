@@ -4,9 +4,7 @@ import { join } from 'node:path';
 
 let { cli } = await prepare({ cli: true, source: false });
 
-
 const [, , ...args] = process.argv;
-
 const bin = join(cli.dir, 'bin', 'ember');
 
 const command = `${bin} new my-app ${args.join(' ')}`
