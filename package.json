@@ -10,7 +10,8 @@
   "scripts": {
     "ci:preflight": "node --no-warnings --experimental-strip-types ./src/ci/preflight.ts",
     "prepare": "node --no-warnings --experimental-strip-types ./src/index.ts",
-    "test:ember-cli": "node --no-warnings --experimental-strip-types ./tests/ember-cli.ts",
+    "test:ember-cli": "node --no-warnings --experimental-strip-types ./src/ci/ember-cli.ts",
+    "test:library": "node --no-warnings --experimental-strip-types ./src/ci/library.ts",
     "test:ecosystem": "node --no-warnings --experimental-strip-types ./src/ci/run.ts"
 
   },
