@@ -52,9 +52,9 @@ jobs:
 
 
   # TODO: when anything falis here, auto-open an issue on ember-cli
-  new_project:
+  new_app:
     needs: [preflight] # not explicitly required, but if this fails, I don't want any of CI running
-    name: 'New Project'
+    name: 'New App'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
