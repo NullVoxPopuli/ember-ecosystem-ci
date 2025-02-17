@@ -37,7 +37,7 @@ jobs:
   # Tests ember-source
   #
   ecosystem:
-    name: "Ecosystem: ${{ matrix.name }}"
+    name: "🌐 ${{ matrix.name }}"
     needs: [preflight]
     runs-on: ubuntu-latest
     strategy:
@@ -49,8 +49,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - name: "Store matrix config for reading"
+        env:
+          JSON_DOC: ${{ toJSON(matrix) }}
         run: |
-          echo "${{ fromJson(matrix) }}" > test.json
+          printf '%s\n' "$JSON_DOC" > test.json
           echo "Expected config to be read by test:ecosystem :"
           cat test.json
       - name: "Test ${{ matrix.name }}"
