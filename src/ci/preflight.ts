@@ -1,3 +1,3 @@
 import { config } from "../../ecosystem-config.ts";
 
-console.log(JSON.stringify(config));
+console.log(JSON.stringify({ include: config }));
