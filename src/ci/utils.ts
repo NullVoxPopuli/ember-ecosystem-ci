@@ -19,7 +19,8 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
   logRun(cmd);
 
   try {
-    let result = await execaCommand(cmd, { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
+    let isMultiCommand = cmd.includes(';') || cmd.includes('&&');
+    let result = await execaCommand(isMultiCommand ? `bash -c "${cmd}"` : cmd, { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
 
 
     return result.exitCode === 0;
