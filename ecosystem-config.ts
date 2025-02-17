@@ -1,4 +1,4 @@
-interface Entry {
+export interface Entry {
   // This will show up in the CI matrix
   name: string;
   // git URL to checkout the code
