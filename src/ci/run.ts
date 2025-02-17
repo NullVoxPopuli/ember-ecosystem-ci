@@ -5,7 +5,6 @@ import { join } from 'node:path';
 import { prepare } from '#utils';
 import { pf, run } from './utils.ts';
 
-
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
 const [, , filePath] = (process.argv);
@@ -21,7 +20,7 @@ let { repo, setup, test, testDir, name } = json;
 
 let { source } = await prepare({ source: true });
 
-let cleanedName = name.replaceAll(/\s/, '-');
+let cleanedName = name.replaceAll(/\s/g, '-');
 let dir = join(tmp, cleanedName);
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
