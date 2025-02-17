@@ -10,6 +10,14 @@ This is a suite of slow, high-fidelity, nightly tests that ensure different aspe
 
 ## Adding a new library / app
 
-- a new script per library app is needed in the `tests` directory, and then that should be invoked in CI in the appropriate workflow job location.
+PR a change to `ecosystem-config.ts`, which adds an object that looks something like the following:
+```ts
+{
+    name: 'package majors',
+    repo: 'https://github.com/NullVoxPopuli/package-majors.git',
+    setup: 'pnpm install',
+    test: 'pnpm test:ember'
+}
+```
 
 

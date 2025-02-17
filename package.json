@@ -9,7 +9,9 @@
   "packageManager": "pnpm@10.4.0",
   "scripts": {
     "prepare": "node --no-warnings --experimental-strip-types ./src/index.ts",
-    "test:ember-cli": "node --no-warnings --experimental-strip-types ./tests/ember-cli.ts"
+    "test:ember-cli": "node --no-warnings --experimental-strip-types ./tests/ember-cli.ts",
+    "test:ecosystem": "node --no-warnings --experimental-strip-types ./src/ci/run.ts"
+
   },
   "engines": {
     "node": "^22.14.0"

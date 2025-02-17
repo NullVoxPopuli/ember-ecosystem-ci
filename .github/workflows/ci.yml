@@ -33,38 +33,43 @@ jobs:
           - '--embroider --typescript' 
           - '--embroider --typescript --pnpm' 
 
+
+
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember-cli ${{ matrix.args }}
 
 
-  classic:
-    name: 'Classic (broccoli)'
+  preflight: 
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
+      - id: set-matrix
+        working-directory: test-packages/support
+        run: |
+          matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
-  webpack:
-    name: 'Webpack (embroider3)'
+  ecosystem:
+    name: ${{ matrix.name }}  
+    needs: ['preflight']
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 50 # this is trying to avoid hitting API rate limits when too many tests are hitting the github API at once.
+      matrix: ${{fromJson(needs.preflight.outputs.matrix)}}
+
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
-
-  vite_compat:
-    name: 'Vite (compat)'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: wyvox/action-setup-pnpm@v3
-
-  vite_minimal:
-    name: 'Vite (minimal)'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: wyvox/action-setup-pnpm@v3
-
+      - run: |
+          echo "${{ toJSON(matrix) }}" > test.json
+          cat test.json
+          pnpm test:ecosystem ./test.json 
 
