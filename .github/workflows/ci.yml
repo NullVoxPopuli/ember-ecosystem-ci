@@ -51,7 +51,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - id: set-matrix
-        working-directory: test-packages/support
         run: |
           matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT

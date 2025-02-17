@@ -8,6 +8,7 @@
   },
   "packageManager": "pnpm@10.4.0",
   "scripts": {
+    "ci:preflight": "node --no-warnings --experimental-strip-types ./src/ci/preflight.ts",
     "prepare": "node --no-warnings --experimental-strip-types ./src/index.ts",
     "test:ember-cli": "node --no-warnings --experimental-strip-types ./tests/ember-cli.ts",
     "test:ecosystem": "node --no-warnings --experimental-strip-types ./src/ci/run.ts"
