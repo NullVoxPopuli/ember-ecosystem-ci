@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import { readFile, cp, rm } from 'node:fs/promises';
+import { readFile, cp, rm, mkdir } from 'node:fs/promises';
 import type { Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
 import { prepare } from '#utils';
@@ -23,6 +23,7 @@ let { source } = await prepare({ source: true });
 let cleanedName = name.replaceAll(/[\s/\\|%^*()]/g, '-');
 let dir = join(tmp, cleanedName);
 
+await mkdir(dir, { recursive: true });
 await rm(dir, { force: true, recursive: true });
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
