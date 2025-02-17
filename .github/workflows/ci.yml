@@ -34,7 +34,7 @@ jobs:
 
   ecosystem:
     name: ${{ matrix.name }}  
-    needs: ['preflight']
+    needs: [preflight]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
