@@ -2,11 +2,9 @@ import assert from 'node:assert';
 import { readFile, cp } from 'node:fs/promises';
 import type { Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
-import { $, execaCommand } from 'execa';
 import { prepare } from '#utils';
 import { pf, run } from './utils.ts';
 
-let { source } = await prepare({ source: true });
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
@@ -20,6 +18,8 @@ let str = buffer.toString();
 let json = JSON.parse(str) as Entry;
 
 let { repo, setup, test, testDir, name } = json;
+
+let { source } = await prepare({ source: true });
 
 let cleanedName = name.replaceAll(/\s/, '-');
 let dir = join(tmp, cleanedName);
