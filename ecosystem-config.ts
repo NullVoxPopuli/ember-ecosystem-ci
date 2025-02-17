@@ -12,9 +12,38 @@ export interface Entry {
 }
 export const config: Entry[] = [
   {
-    name: 'package majors',
+    name: 'ember-qunit',
+    repo: 'https://github.com/emberjs/ember-qunit.git',
+    setup: 'pnpm install; ( cd addon && pnpm build )',
+    testDir: 'test-app',
+    test: 'pnpm test:ember'
+  },
+  {
+    name: '@ember/test-helpers',
+    repo: 'https://github.com/emberjs/ember-test-helpers.git',
+    setup: 'pnpm install; ( cd addon && pnpm build )',
+    testDir: 'test-app',
+    test: 'pnpm test:ember'
+  },
+  {
+    name: 'ember-page-title',
+    repo: 'https://github.com/ember-cli/ember-page-title.git',
+    setup: 'pnpm install; pnpm build',
+    testDir: 'test-app',
+    test: 'pnpm test:ember'
+  },
+  {
+    name: 'ember-provide-consume-context',
+    repo: 'https://github.com/customerio/ember-provide-consume-context.git',
+    setup: 'pnpm install; pnpm build',
+    testDir: 'test-app',
+    test: 'pnpm test:ember'
+  },
+  {
+    name: 'package-majors',
     repo: 'https://github.com/NullVoxPopuli/package-majors.git',
     setup: 'pnpm install',
+    testDir: 'test-app',
     test: 'pnpm test:ember'
   },
   {
@@ -23,5 +52,19 @@ export const config: Entry[] = [
     setup: 'pnpm install; pnpm build',
     testDir: 'test-app',
     test: 'pnpm test:ember'
-  }
+  },
+  {
+    name: 'ember-simple-auth',
+    repo: 'https://github.com/mainmatter/ember-simple-auth.git',
+    setup: 'pnpm install',
+    testDir: 'packages/test-app',
+    test: 'pnpm test'
+  },
+  // {
+  //   name: '@sentry/ember',
+  //   repo: 'https://github.com/getsentry/sentry-javascript.git',
+  //   setup: 'pnpm install',
+  //   testDir: 'packages/ember',
+  //   test: 'pnpm test'
+  // },
 ]
