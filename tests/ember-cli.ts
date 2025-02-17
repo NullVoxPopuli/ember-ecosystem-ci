@@ -37,7 +37,7 @@ let prodbuild = await run(`${manager} run build`)
 let isSuccess = [lint, lintFix, test, prodbuild].every(Boolean);
 
 function pf(bool: boolean) {
-  return bool ? 'pass' : 'fail';
+  return bool ? styleText('green', 'pass') : styleText('red', 'fail');
 }
 
 console.info(`
