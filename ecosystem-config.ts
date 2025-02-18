@@ -26,6 +26,12 @@ export const config: Entry[] = [
     test: 'pnpm test:ember'
   },
   {
+    name: 'crates.io',
+    repo: 'https://github.com/rust-lang/crates.io.git',
+    setup: 'pnpm install',
+    test: 'pnpm test'
+  },
+  {
     name: 'ember-data',
     repo: 'https://github.com/emberjs/data.git',
     setup: 'pnpm install',
