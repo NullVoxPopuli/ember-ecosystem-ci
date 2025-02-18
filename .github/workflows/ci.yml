@@ -63,6 +63,7 @@ jobs:
         with:
           name: ecosystem
           path: output/*.txt
+          include-hidden-files: true
 
 
 
@@ -95,6 +96,7 @@ jobs:
         if: always()
         with:
           name: app
+          include-hidden-files: true
           path: output/*.txt
 
 
@@ -125,6 +127,7 @@ jobs:
         with:
           name: library
           path: output/*.txt
+          include-hidden-files: true
 
 
 
