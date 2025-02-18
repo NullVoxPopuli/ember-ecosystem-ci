@@ -48,6 +48,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
+      - uses: oven-sh/setup-bun@v2
+      - uses: moonrepo/setup-toolchain@v0
+        with:
+          auto-install: true
       - name: "Store matrix config for reading"
         env:
           JSON_DOC: ${{ toJSON(matrix) }}
@@ -106,7 +110,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:library ${{ matrix.args }}
 
