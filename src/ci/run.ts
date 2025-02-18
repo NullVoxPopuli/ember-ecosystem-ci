@@ -6,6 +6,7 @@ import { detectPackageManager } from "nypm";
 import { prepare } from '#utils';
 import { bool2Text, pf, run, writeOutput } from './utils.ts';
 import { NAME } from '../args.ts';
+import { $ } from 'execa';
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
@@ -39,6 +40,7 @@ await mkdir(dir, { recursive: true });
 await rm(dir, { force: true, recursive: true });
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
+await $({ cwd: dir, stdio: 'inherit' })`bash -c "proto activate; pnpm --version; node --version"`;
 let setupResult = await run(setup, dir);
 
 let dirToTestIn = testDir ? join(dir, testDir) : dir;
