@@ -40,6 +40,7 @@ jobs:
     name: "🌐 ${{ matrix.name }}"
     needs: [preflight]
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       max-parallel: 50 # this is trying to avoid hitting API rate limits when too many tests are hitting the github API at once.
