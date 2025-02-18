@@ -56,7 +56,16 @@ jobs:
           echo "Expected config to be read by test:ecosystem :"
           cat test.json
       - name: "Test ${{ matrix.name }}"
-        run: pnpm test:ecosystem ./test.json 
+        run: |
+          pnpm test:ecosystem ./test.json 
+          result="{ \"code\": $?, \"name\": \"Ecosystem: ${{matrix.name}}\" }" 
+          mkdir outputs 
+          echo $result > outputs/$(uuid).txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecosystem
+          path: outputs/*.txt
 
 
 
@@ -83,7 +92,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
-      - run: pnpm test:ember-cli ${{ matrix.args }}
+      - run: |
+          pnpm test:ember-cli ${{ matrix.args }}
+          result="{ \"code\": $?, \"name\": \"New App: ${{matrix.args}}\" }" 
+          mkdir outputs 
+          echo $result > outputs/$(uuid).txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: outputs/*.txt
 
 
   ##################
@@ -106,6 +124,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
-      - run: pnpm test:library ${{ matrix.args }}
+      - run: |
+          pnpm test:library ${{ matrix.args }}
+          result="{ \"code\": $?, \"name\": \"Library: ${{matrix.args}}\" }" 
+          mkdir outputs 
+          echo $result > outputs/$(uuid).txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: library
+          path: outputs/*.txt
 
 
+
+  output:
+    needs: [new_library, new_app, ecosystem]
+    if: always()
+    name: 'Output'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: outputs
+      - uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: outputs
+      - uses: actions/download-artifact@v4
+        with:
+          name: ecosystem
+          path: outputs
+
+      - run: |
+          cat outputs/**
