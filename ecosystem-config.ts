@@ -25,15 +25,20 @@ export const config: Entry[] = [
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
-  // Broken: 
-  //   Fix: https://github.com/ember-cli/ember-page-title/pull/294
-  // {
-  //   name: 'ember-page-title',
-  //   repo: 'https://github.com/ember-cli/ember-page-title.git',
-  //   setup: 'pnpm install; pnpm build',
-  //   testDir: 'test-app',
-  //   test: 'pnpm test:ember'
-  // },
+  {
+    name: 'ember-data',
+    repo: 'https://github.com/emberjs/data.git',
+    setup: 'pnpm install',
+    testDir: 'tests/main',
+    test: 'pnpm test:ember'
+  },
+  {
+    name: 'ember-page-title',
+    repo: 'https://github.com/ember-cli/ember-page-title.git',
+    setup: 'pnpm install; pnpm build',
+    testDir: 'test-app',
+    test: 'pnpm test:ember'
+  },
   {
     name: 'ember-provide-consume-context',
     repo: 'https://github.com/customerio/ember-provide-consume-context.git',
