@@ -1,15 +1,26 @@
 import assert from 'node:assert';
-import { readFile, cp, rm, mkdir } from 'node:fs/promises';
-import type { Entry } from '../../ecosystem-config.ts';
+import { readFile, cp, rm, mkdir, writeFile } from 'node:fs/promises';
+import { config, type Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
 import { prepare } from '#utils';
 import { pf, run } from './utils.ts';
+import { NAME } from '../args.ts';
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
 const [, , filePath] = (process.argv);
 
 assert(filePath, `expected the first arg to src/ci/run.ts to be passed. This should be the file path to the json config for thish test run`);
+
+if (NAME) {
+  let found = config.filter(entry => entry.name === NAME);
+
+  assert(found, `Could not find ecosystem config with name: \`${NAME}\`.`);
+
+  let str = JSON.stringify(found[0]);
+
+  await writeFile(filePath, str);
+}
 
 
 let buffer = await readFile(filePath);
@@ -31,25 +42,33 @@ let setupResult = await run(setup, dir);
 
 let dirToTestIn = testDir ? join(dir, testDir) : dir;
 
-if (process.env.DEBUG) {
-  console.log({
-    tmp,
-    dir,
-    dirToTestIn,
-    repo,
-    testDir,
-    cleanedName,
-    source,
-  })
-}
+let sourceTarget = join(dirToTestIn, 'ember-source.tgz');
+console.log(
+  `
+Copying 
+  ${source.tgz}
+to
+  ${sourceTarget}
+`
+);
+await cp(source.tgz, sourceTarget);
+
+// console.log({
+//   tmp,
+//   dir,
+//   dirToTestIn,
+//   repo,
+//   testDir,
+//   cleanedName,
+//   source,
+// })
 
 
-await cp(source.tgz, join(dirToTestIn, 'ember-source.tgz'));
 
 /**
   * For now, all projects are pnpm, so we don't need to detect package manager
   */
-let installFromMainResult = await run(`pnpm add ./ember-source.tgz`, dirToTestIn);
+let installFromMainResult = await run(`pnpm add ${source.tgz}`, dirToTestIn);
 
 let testResult = await run(test, dirToTestIn);
 

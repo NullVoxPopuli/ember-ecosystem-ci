@@ -16,11 +16,14 @@ export function logRun(cmd: string) {
 
 
 export async function run(cmd: string, inDir = 'tmp/my-project') {
-  logRun(cmd);
+  let isMultiCommand = cmd.includes(';') || cmd.includes('&&');
+
+  let realCommand = isMultiCommand ? `bash -c "${cmd}"` : cmd
+  logRun(realCommand);
 
   try {
-    let isMultiCommand = cmd.includes(';') || cmd.includes('&&');
-    let result = await execaCommand(isMultiCommand ? `bash -c "${cmd}"` : cmd, { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
+    let result = await execaCommand(realCommand,
+      { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
 
 
     return result.exitCode === 0;

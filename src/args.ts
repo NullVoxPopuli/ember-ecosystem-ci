@@ -1,9 +1,11 @@
 const [, , ...args] = process.argv;
 
 export const SKIP_BUILD = bool('--skip-build');
+export const NAME = str('--name');
 
 console.log({
   '--skip-build': SKIP_BUILD,
+  '--name': NAME,
 });
 
 function bool(name: string) {
