@@ -99,9 +99,9 @@ jobs:
       fail-fast: false
       matrix:
         args: 
-          - '' 
+          - '--npm' 
           - '--pnpm' 
-          - '--typescript' 
+          - '--typescript --npm' 
           - '--typescript --pnpm' 
 
     steps:
