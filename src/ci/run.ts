@@ -8,6 +8,7 @@ import { bool2Text, pf, run, writeOutput } from './utils.ts';
 import { NAME } from '../args.ts';
 import { getPackages } from "@manypkg/get-packages";
 import { packageJson } from 'ember-apply';
+import { existsSync } from 'node:fs';
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
@@ -91,7 +92,13 @@ let packageManager = await detectPackageManager(dir);
 
 assert(packageManager, `Could not determine package manager in ${dir}`);
 
-let installFromMainResult = await run(`${packageManager.name} add ${source.tgz}`, dirToTestIn);
+const isWorkspaceRoot = existsSync(join(dirToTestIn, 'pnpm-lock.yaml'));
+let installMainCommand = `${packageManager.name} add ${source.tgz}`;
+if (isWorkspaceRoot) {
+  installMainCommand += ' -w';
+}
+
+let installFromMainResult = await run(installMainCommand, dirToTestIn);
 // let installFromMainResult = await run(`pnpm add ${source.tgz}`, dirToTestIn);
 
 let testResult = await run(test, dirToTestIn);
