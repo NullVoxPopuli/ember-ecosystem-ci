@@ -62,7 +62,7 @@ jobs:
         if: always()
         with:
           name: ecosystem
-          path: outputs/*.txt
+          path: output/*.txt
 
 
 
@@ -95,7 +95,7 @@ jobs:
         if: always()
         with:
           name: app
-          path: outputs/*.txt
+          path: output/*.txt
 
 
   ##################
@@ -124,7 +124,7 @@ jobs:
         if: always()
         with:
           name: library
-          path: outputs/*.txt
+          path: output/*.txt
 
 
 
@@ -139,15 +139,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: library
-          path: outputs
+          path: output
       - uses: actions/download-artifact@v4
         with:
           name: app
-          path: outputs
+          path: output
       - uses: actions/download-artifact@v4
         with:
           name: ecosystem
-          path: outputs
+          path: output
 
       - run: |
-          cat outputs/**
+          cat output/**
