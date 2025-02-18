@@ -58,12 +58,6 @@ jobs:
       - name: "Test ${{ matrix.name }}"
         run: pnpm test:ecosystem ./test.json 
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ecosystem
-          path: output/*.txt
-          include-hidden-files: true
 
 
 
@@ -92,13 +86,6 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember-cli ${{ matrix.args }}
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: app
-          include-hidden-files: true
-          path: output/*.txt
-
 
   ##################
   #
@@ -122,14 +109,6 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:library ${{ matrix.args }}
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: library
-          path: output/*.txt
-          include-hidden-files: true
-
-
 
   output:
     needs: [new_library, new_app, ecosystem]
@@ -139,18 +118,3 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
-      - uses: actions/download-artifact@v4
-        with:
-          name: library
-          path: output
-      - uses: actions/download-artifact@v4
-        with:
-          name: app
-          path: output
-      - uses: actions/download-artifact@v4
-        with:
-          name: ecosystem
-          path: output
-
-      - run: |
-          cat output/**
