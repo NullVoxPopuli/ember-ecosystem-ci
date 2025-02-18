@@ -40,7 +40,7 @@ await mkdir(dir, { recursive: true });
 await rm(dir, { force: true, recursive: true });
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
-await $({ cwd: dir, stdio: 'inherit' })`bash -c "proto activate; pnpm --version; node --version"`;
+await $({ cwd: dir, stdio: 'inherit' })`bash -c "pnpm --version; node --version"`;
 let setupResult = await run(setup, dir);
 
 let dirToTestIn = testDir ? join(dir, testDir) : dir;
