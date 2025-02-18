@@ -3,7 +3,7 @@ import { readFile, cp, rm, mkdir, writeFile } from 'node:fs/promises';
 import { config, type Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
 import { prepare } from '#utils';
-import { pf, run } from './utils.ts';
+import { bool2Text, pf, run, writeOutput } from './utils.ts';
 import { NAME } from '../args.ts';
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
@@ -90,6 +90,13 @@ console.info(`
 
   Overall: ${isSuccess}
 `);
+
+await writeOutput({
+  clone: bool2Text(cloneResult),
+  setup: bool2Text(setupResult),
+  'ember#main': bool2Text(installFromMainResult),
+  test: bool2Text(testResult)
+});
 
 if (!isSuccess) {
   process.exit(1);

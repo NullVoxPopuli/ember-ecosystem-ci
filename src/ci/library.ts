@@ -1,7 +1,7 @@
 import { prepare } from '#utils';
 import { execaCommand } from 'execa';
 import { join } from 'node:path';
-import { logRun, pf, run } from './utils.ts';
+import { bool2Text, logRun, pf, run, writeOutput } from './utils.ts';
 
 let { cli } = await prepare({ cli: true, source: false });
 
@@ -36,6 +36,14 @@ console.info(`
 
   Overall: ${isSuccess}
 `);
+
+await writeOutput({
+  install: bool2Text(install),
+  lint: bool2Text(lint),
+  'lint:fix': bool2Text(lintFix),
+  'test:ember': bool2Text(test),
+  build: bool2Text(prodbuild)
+});
 
 if (!isSuccess) {
   process.exit(1);

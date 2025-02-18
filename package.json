@@ -18,7 +18,8 @@
     "node": "^22.14.0"
   },
   "dependencies": {
-    "execa": "^9.5.2"
+    "execa": "^9.5.2",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^22.0.1",
