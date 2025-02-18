@@ -58,7 +58,7 @@ export const config: Entry[] = [
   {
     name: 'ember-simple-auth',
     repo: 'https://github.com/mainmatter/ember-simple-auth.git',
-    setup: 'pnpm install',
+    setup: 'pnpm install; cd packages/ember-simple-auth && pnpm build',
     testDir: 'packages/test-app',
     test: 'pnpm test'
   },
