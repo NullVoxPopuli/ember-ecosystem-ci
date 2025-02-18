@@ -2,6 +2,7 @@ import assert from 'node:assert';
 import { readFile, cp, rm, mkdir, writeFile } from 'node:fs/promises';
 import { config, type Entry } from '../../ecosystem-config.ts';
 import { join } from 'node:path';
+import { detectPackageManager } from "nypm";
 import { prepare } from '#utils';
 import { bool2Text, pf, run, writeOutput } from './utils.ts';
 import { NAME } from '../args.ts';
@@ -68,7 +69,12 @@ await cp(source.tgz, sourceTarget);
 /**
   * For now, all projects are pnpm, so we don't need to detect package manager
   */
-let installFromMainResult = await run(`pnpm add ${source.tgz}`, dirToTestIn);
+let packageManager = await detectPackageManager(dir);
+
+assert(packageManager, `Could not determine package manager in ${dir}`);
+
+let installFromMainResult = await run(`${packageManager.name} add ${source.tgz}`, dirToTestIn);
+// let installFromMainResult = await run(`pnpm add ${source.tgz}`, dirToTestIn);
 
 let testResult = await run(test, dirToTestIn);
 
