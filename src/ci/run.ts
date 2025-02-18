@@ -6,7 +6,8 @@ import { detectPackageManager } from "nypm";
 import { prepare } from '#utils';
 import { bool2Text, pf, run, writeOutput } from './utils.ts';
 import { NAME } from '../args.ts';
-import { $ } from 'execa';
+import { getPackages } from "@manypkg/get-packages";
+import { packageJson } from 'ember-apply';
 
 let tmp = join(process.cwd(), 'tmp', 'tests');
 
@@ -40,7 +41,22 @@ await mkdir(dir, { recursive: true });
 await rm(dir, { force: true, recursive: true });
 
 let cloneResult = await run(`git clone ${repo} ${cleanedName}`, tmp);
-await $({ cwd: dir, stdio: 'inherit' })`bash -c "pnpm --version; node --version"`;
+
+/**
+ * ember-data, has set "engines" for their packageManagers.
+ * This makes interacting with them more difficult.
+ * So, for all cloned repos now, we'll delete all engines .
+ * entries in all package.jsons
+ */
+let repoInfo = await getPackages(dir);
+for (let pkg of repoInfo.packages) {
+  packageJson.modify(json => {
+    delete json.engines
+  }, pkg.dir)
+}
+
+
+
 let setupResult = await run(setup, dir);
 
 let dirToTestIn = testDir ? join(dir, testDir) : dir;

@@ -18,6 +18,8 @@
     "node": "^22.14.0"
   },
   "dependencies": {
+    "@manypkg/get-packages": "^2.2.2",
+    "ember-apply": "^2.15.0",
     "execa": "^9.5.2",
     "nypm": "^0.5.2",
     "uuid": "^11.0.5"
