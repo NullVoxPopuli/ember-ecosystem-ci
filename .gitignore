@@ -4,3 +4,4 @@ dist/
 output/
 declarations/
 test.json
+*.tgz
