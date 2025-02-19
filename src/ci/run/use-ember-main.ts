@@ -6,6 +6,7 @@ import { detectPackageManager } from "nypm";
 import assert from "node:assert";
 import { existsSync } from "node:fs";
 
+const prebuiltTgzName = 'ember-source-main.tgz';
 
 export async function useEmberMain() {
   let config = await getConfig();
@@ -14,18 +15,28 @@ export async function useEmberMain() {
   let { dirToTestIn, cloneDir: dir } = state;
 
   if (!state.useEmberMain) {
-    let { source } = await prepare({ source: true });
+    let prebuiltPath = join(process.cwd(), prebuiltTgzName);
+    let doesExist = existsSync(prebuiltPath);
+
+    let tgzPath = ''
+    if (doesExist) {
+      tgzPath = prebuiltPath;
+    } else {
+      let { source } = await prepare({ source: true });
+
+      tgzPath = source.tgz;
+    }
 
     let sourceTarget = join(dirToTestIn, 'ember-source.tgz');
     console.log(
       `
 Copying 
-  ${source.tgz}
+  ${tgzPath}
 to
   ${sourceTarget}
 `
     );
-    await cp(source.tgz, sourceTarget);
+    await cp(prebuiltPath, sourceTarget);
 
 
     /**
@@ -38,7 +49,7 @@ to
     const isWorkspaceRoot = existsSync(join(dirToTestIn, 'pnpm-lock.yaml'));
 
 
-    let installMainCommand = `${packageManager.name} add ${source.tgz}`;
+    let installMainCommand = `${packageManager.name} add ${tgzPath}`;
     if (isWorkspaceRoot) {
       installMainCommand += ' -w';
     }

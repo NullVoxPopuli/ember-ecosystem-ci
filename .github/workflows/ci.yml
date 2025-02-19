@@ -32,6 +32,27 @@ jobs:
           matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
+  build_ember-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps: 
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - name: Build ember-source @ main
+        run: pnpm ci:run ./src/ci/build-ember-source.ts  
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ember-source-main-tgz
+          path: "*.tgz"
+          if-no-files-found: 'error'
+          retention-days: 1
+          overwrite: true
+
+
+
+
   ##################
   #
   # Tests ember-source
@@ -52,6 +73,12 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       # Used by ember-data
       - uses: oven-sh/setup-bun@v2
+
+      - name: Download built ember-source 
+        uses: actions/download-artifact@v4
+        with:
+          name: ember-source-main-tgz
+      - run: ls -la
 
       # All of this can be ran locally via
       # pnpm test:ecosystem --name=@ember/test-helpers (for example)
