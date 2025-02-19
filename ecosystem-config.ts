@@ -41,7 +41,7 @@ export const config: Entry[] = [
   {
     name: 'ember-page-title',
     repo: 'https://github.com/ember-cli/ember-page-title.git',
-    setup: 'pnpm install; pnpm build',
+    setup: 'pnpm install; ( cd addon && pnpm build && pnpm install --force )',
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
