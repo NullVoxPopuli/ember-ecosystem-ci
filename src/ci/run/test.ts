@@ -1,5 +1,5 @@
-import { getConfig, writeConfig } from "./-utils.ts";
-import { run } from "../utils.ts";
+import { getConfig, writeConfig } from "./-config.ts";
+import { log, run } from "#utils";
 
 
 export async function test() {
@@ -23,4 +23,7 @@ export async function test() {
 if (import.meta.filename === process.argv[1]) {
   console.info(`Running Tests...`);
   await test();
+
+  let config = await getConfig();
+  log.inspect(config);
 }

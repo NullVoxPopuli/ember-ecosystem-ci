@@ -1,7 +1,6 @@
-import { prepare } from '#utils';
+import { prepare, bool2Text, logRun, pf, run, writeOutput } from '#utils';
 import { execaCommand } from 'execa';
 import { join } from 'node:path';
-import { bool2Text, logRun, pf, run, writeOutput } from './utils.ts';
 
 let { cli } = await prepare({ cli: true, source: false });
 

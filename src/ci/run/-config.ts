@@ -1,5 +1,5 @@
-import { config, type Entry } from '../../../ecosystem-config.ts';
-import { CONFIG, FORCE, NAME } from '../../args.ts';
+import { config, type Entry } from '#ecosystem-config';
+import { CONFIG, FORCE, NAME } from '#args';
 import assert from 'node:assert';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';

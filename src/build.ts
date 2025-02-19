@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs';
 import { $ } from 'execa';
 import assert from 'node:assert';
 
-import { SKIP_BUILD } from './args.ts';
+import { SKIP_BUILD } from '#args';
 
 let tmp = join(process.cwd(), 'tmp', 'packages');
 

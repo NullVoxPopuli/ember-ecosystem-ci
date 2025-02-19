@@ -1,6 +1,6 @@
-import { mkdir, rm } from "fs/promises";
-import { getConfig, writeConfig } from "./-utils.ts";
-import { run } from "../utils.ts";
+import { mkdir, rm } from "node:fs/promises";
+import { getConfig, writeConfig } from "./-config.ts";
+import { log, run } from "#utils";
 
 
 export async function clone() {
@@ -27,4 +27,7 @@ export async function clone() {
 if (import.meta.filename === process.argv[1]) {
   console.info(`Cloning...`);
   await clone();
+
+  let config = await getConfig();
+  log.inspect(config);
 }

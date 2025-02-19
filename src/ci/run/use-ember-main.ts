@@ -1,8 +1,6 @@
-import { mkdir, rm } from "fs/promises";
-import { getConfig, writeConfig } from "./-utils.ts";
-import { run } from "../utils.ts";
+import { getConfig, writeConfig } from "./-config.ts";
 import { join } from "node:path";
-import { prepare } from "#utils";
+import { log, prepare, run } from "#utils";
 import { cp } from "node:fs/promises";
 import { detectPackageManager } from "nypm";
 import assert from "node:assert";
@@ -61,4 +59,7 @@ to
 if (import.meta.filename === process.argv[1]) {
   console.info(`Setting up ember-source @ main...`);
   await useEmberMain();
+
+  let config = await getConfig();
+  log.inspect(config);
 }

@@ -1,7 +1,7 @@
 import { getPackages } from "@manypkg/get-packages";
 import { packageJson } from 'ember-apply';
-import { getConfig, writeConfig } from "./-utils.ts";
-import { run } from "../utils.ts";
+import { getConfig, writeConfig } from "./-config.ts";
+import { log, run } from "#utils";
 
 export async function setup() {
   let config = await getConfig();
@@ -36,4 +36,7 @@ export async function setup() {
 if (import.meta.filename === process.argv[1]) {
   console.info(`Setting up...`);
   await setup();
+
+  let config = await getConfig();
+  log.inspect(config);
 }

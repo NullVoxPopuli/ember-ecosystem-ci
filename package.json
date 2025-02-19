@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "imports": {
-    "#utils": "./src/index.ts"
+    "#utils": "./src/index.ts",
+    "#args": "./src/args.ts",
+    "#ecosystem-config": "./ecosystem-config.ts"
   },
   "packageManager": "pnpm@10.4.1",
   "scripts": {

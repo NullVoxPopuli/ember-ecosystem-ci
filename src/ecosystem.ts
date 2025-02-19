@@ -1,5 +1,5 @@
-import { bool2Text, pf, writeOutput } from './ci/utils.ts';
-import { getConfig } from './ci/run/-utils.ts';
+import { bool2Text, pf, writeOutput } from '#utils';
+import { getConfig } from './ci/run/-config.ts';
 import { clone } from './ci/run/clone.ts';
 import { setup } from './ci/run/setup.ts';
 import { useEmberMain } from './ci/run/use-ember-main.ts';
