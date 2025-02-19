@@ -112,6 +112,10 @@ jobs:
           - '--embroider' 
           - '--embroider --typescript' 
           - '--embroider --typescript --pnpm' 
+          - '--blueprint @embroider/app-blueprint --pnpm' 
+          - '--blueprint @embroider/app-blueprint --pnpm --typescript' 
+          - '--blueprint @embroider/app-blueprint --npm' 
+          - '--blueprint @embroider/app-blueprint --npm --typescript' 
 
     steps:
       - uses: actions/checkout@v4
