@@ -28,15 +28,9 @@ export async function useEmberMain() {
     }
 
     let sourceTarget = join(dirToTestIn, 'ember-source.tgz');
-    console.log(
-      `
-Copying 
-  ${tgzPath}
-to
-  ${sourceTarget}
-`
-    );
-    await cp(prebuiltPath, sourceTarget);
+
+    logCopy(sourceTarget, tgzPath);
+    await cp(tgzPath, sourceTarget);
 
 
     /**
@@ -64,6 +58,17 @@ to
   }
 
   return config.state.useEmberMain;
+}
+
+function logCopy(to: string, from: string) {
+  console.log(
+    `
+Copying 
+  ${from}
+to
+  ${to}
+`
+  );
 }
 
 
