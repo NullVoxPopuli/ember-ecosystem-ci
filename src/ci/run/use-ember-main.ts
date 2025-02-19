@@ -53,16 +53,18 @@ export async function useEmberMain() {
         cmd += ' -w';
       }
 
-      result &&= await run(cmd, dir);
+      let resultA = await run(cmd, dir);
+
+      result = result && resultA;
     }
 
-    if (isWorkspaceRoot) {
+
+    if (isWorkspaceRoot && dirToTestIn !== dir) {
       installMainCommand += ' -w';
     }
 
-    console.log({ isWorkspaceRoot, installMainCommand });
-
-    result &&= await run(installMainCommand, dirToTestIn);
+    let resultB = await run(installMainCommand, dirToTestIn);
+    result = result && resultB;
 
     config.state.useEmberMain = result;
 

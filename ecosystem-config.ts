@@ -56,7 +56,6 @@ export const config: Entry[] = [
     name: 'package-majors',
     repo: 'https://github.com/NullVoxPopuli/package-majors.git',
     setup: 'pnpm install',
-    testDir: 'test-app',
     test: 'pnpm test:ember'
   },
   {
