@@ -95,14 +95,14 @@ export async function getConfig(): Promise<Config> {
   let result = {
     ...json,
     state: {
-      tmp,
       clone: false,
       setup: false,
       test: false,
       useEmberMain: false,
       ...(json.state ?? {}),
-      configPath: filePath,
+      tmp,
       cleanedName,
+      configPath: filePath,
       cloneDir,
       dirToTestIn,
     }

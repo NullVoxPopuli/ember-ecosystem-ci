@@ -2,7 +2,7 @@ import { getConfig, writeConfig } from "./-config.ts";
 import { log, run } from "#utils";
 
 
-export async function test() {
+export async function runTests() {
   let config = await getConfig();
 
   let { test: testScript, state } = config;
@@ -22,7 +22,7 @@ export async function test() {
 
 if (import.meta.filename === process.argv[1]) {
   console.info(`Running Tests...`);
-  await test();
+  await runTests();
 
   let config = await getConfig();
   log.inspect(config);

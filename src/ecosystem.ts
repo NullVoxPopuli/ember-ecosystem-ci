@@ -3,7 +3,7 @@ import { getConfig } from './ci/run/-config.ts';
 import { clone } from './ci/run/clone.ts';
 import { setup } from './ci/run/setup.ts';
 import { useEmberMain } from './ci/run/use-ember-main.ts';
-import { test } from './ci/run/test.ts';
+import { runTests } from './ci/run/test.ts';
 
 
 let config = await getConfig();
@@ -14,7 +14,7 @@ let { name } = config;
 let cloneResult = await clone();
 let setupResult = await setup();
 let installFromMainResult = await useEmberMain();
-let testResult = await test();
+let testResult = await runTests();
 
 let isSuccess = [cloneResult, setupResult, testResult, installFromMainResult].every(Boolean);
 
