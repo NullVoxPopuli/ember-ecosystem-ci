@@ -21,7 +21,7 @@ export const config: Entry[] = [
   {
     name: '@ember/test-helpers',
     repo: 'https://github.com/emberjs/ember-test-helpers.git',
-    setup: 'pnpm install; ( cd addon && pnpm build )',
+    setup: 'pnpm install; ( cd addon && pnpm build && pnpm install --force )',
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
