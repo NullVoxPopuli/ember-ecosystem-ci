@@ -35,8 +35,6 @@ jobs:
   build_ember-source:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
-    steps: 
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
@@ -59,7 +57,7 @@ jobs:
   #
   ecosystem:
     name: "🌐 ${{ matrix.name }}"
-    needs: [preflight]
+    needs: [preflight, build_ember-source]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
