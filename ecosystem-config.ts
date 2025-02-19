@@ -34,7 +34,7 @@ export const config: Entry[] = [
   {
     name: 'ember-data',
     repo: 'https://github.com/emberjs/data.git',
-    setup: 'pnpm install; ',
+    setup: 'pnpm install --ignore-scripts; pnpm prepare',
     testDir: 'tests/main',
     test: 'pnpm test:ember'
   },
