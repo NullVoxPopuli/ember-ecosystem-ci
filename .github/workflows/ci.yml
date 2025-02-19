@@ -18,22 +18,9 @@ env:
   source: git@github.com:emberjs/ember.js.git
 
 jobs:
-  preflight: 
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: wyvox/action-setup-pnpm@v3
-      - id: set-matrix
-        run: |
-          matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
-          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
-
   build_ember-source:
     runs-on: ubuntu-latest
+    name: "Build ember-source"
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +35,20 @@ jobs:
           retention-days: 1
           overwrite: true
 
+
+  preflight: 
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - id: set-matrix
+        run: |
+          matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
 
 
@@ -81,7 +82,7 @@ jobs:
       # pnpm test:ecosystem --name=@ember/test-helpers (for example)
       - name: "Clone"
         run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}  
-      - name: "Setup"
+      - name: "Setup / Build"
         run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}  
       - name: "Install ember-source @ main"
         run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}  
