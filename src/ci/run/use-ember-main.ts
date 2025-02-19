@@ -65,7 +65,8 @@ export async function useEmberMain() {
     }
 
     let isNpm = packageManager.name === 'npm';
-    let installMainCommand = `${packageManager.name} install ${isNpm ? '--force' : ''}`;
+    let isPnpm = packageManager.name === 'pnpm';
+    let installMainCommand = `${packageManager.name} install ${isNpm ? '--force' : ''} ${isPnpm ? '--no-frozen-lockfile' : ''}`;
 
     let result = await run(installMainCommand, dirToTestIn);
 
