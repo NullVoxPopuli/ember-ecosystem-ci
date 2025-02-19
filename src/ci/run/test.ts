@@ -8,15 +8,15 @@ export async function runTests() {
   let { test: testScript, state } = config;
   let { dirToTestIn } = state;
 
-  if (!state.clone) {
+  if (!state.test) {
     let result = await run(testScript, dirToTestIn);
 
-    config.state.clone = result;
+    config.state.test = result;
 
     await writeConfig(config);
   }
 
-  return config.state.clone;
+  return config.state.test;
 }
 
 
