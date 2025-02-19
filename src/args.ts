@@ -1,12 +1,39 @@
+import assert from "node:assert";
+
 const [, , ...args] = process.argv;
 
 export const SKIP_BUILD = bool('--skip-build');
 export const NAME = str('--name');
+export const CONFIG = str('--config');
+export const FORCE = bool('--force');
+
 
 console.log({
   '--skip-build': SKIP_BUILD,
+  /**
+   * name of the project and file per ecosystem config. State for repeat testing is located at:
+   * tmp/state/$name.json
+   */
   '--name': NAME,
+  /**
+   * Deletes any prior state when re-running tests before running again.
+   */
+  '--force': FORCE,
+  /**
+   * Use an existing config file instead of the --name file 
+   */
+  '--config': CONFIG,
 });
+
+assert(NAME || CONFIG, `One of --name or --config is a required argument`)
+
+if (NAME) {
+  assert(!CONFIG, `Cannot set both --name and --config`);
+}
+if (CONFIG) {
+  assert(!NAME, `Cannot set both --name and --config`);
+}
+
 
 function bool(name: string) {
   return args.includes(name);
