@@ -35,7 +35,7 @@ console.info(`
   ember#main   ${pf(installFromMainResult)}
   test         ${pf(testResult)}
 
-  Overall: ${isSuccess}
+  Overall: ${pf(isSuccess)}
 `);
 
 await writeOutput({
