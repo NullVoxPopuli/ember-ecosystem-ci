@@ -109,7 +109,7 @@ jobs:
   #
   # Tests ember-source
   #
-  _ecosystem:
+  ecosystem:
     name: "🌐 ${{ matrix.name }}"
     needs: [preflight, build_ember-source]
     runs-on: ubuntu-latest
