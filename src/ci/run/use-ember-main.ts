@@ -41,16 +41,28 @@ export async function useEmberMain() {
     assert(packageManager, `Could not determine package manager in ${dir}`);
 
     const isWorkspaceRoot = existsSync(join(dirToTestIn, 'pnpm-lock.yaml'));
-
+    const isDirWorkspaceRoot = existsSync(join(dir, 'pnpm-lock.yaml'));
 
     let installMainCommand = `${packageManager.name} add ${tgzPath}`;
+
+    let result = true;
+
+    if (dirToTestIn !== dir) {
+      let cmd = installMainCommand;
+      if (isDirWorkspaceRoot) {
+        cmd += ' -w';
+      }
+
+      result &&= await run(cmd, dir);
+    }
+
     if (isWorkspaceRoot) {
       installMainCommand += ' -w';
     }
 
     console.log({ isWorkspaceRoot, installMainCommand });
 
-    let result = await run(installMainCommand, dirToTestIn);
+    result &&= await run(installMainCommand, dirToTestIn);
 
     config.state.useEmberMain = result;
 
