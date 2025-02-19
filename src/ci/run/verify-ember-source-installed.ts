@@ -10,8 +10,9 @@ export async function verifyEmberSourceInstalled() {
   let result = false;
 
   try {
-    let { stdout } = await $({ cwd: dirToTestIn, stdio: 'inherit' })`npx --yes y-which ember-source`;
+    let { stdout } = await $({ cwd: dirToTestIn })`npx --yes y-which ember-source`;
 
+    console.log(stdout);
     result = (stdout || '').includes('canary');
   } catch (e) {
     result = false;
@@ -27,6 +28,7 @@ if (import.meta.filename === process.argv[1]) {
   let result = await verifyEmberSourceInstalled();
 
   if (!result) {
+    console.log(`Could not determine that the above output included "canary"`);
     process.exit(1);
   }
 }
