@@ -110,7 +110,7 @@ jobs:
   # Tests ember-source
   #
   ecosystem:
-    name: "🌐 ${{ matrix.name }}"
+    name: " 🌐 ${{ matrix.name }}"
     needs: [preflight, build_ember-source]
     runs-on: ubuntu-latest
     timeout-minutes: 5
