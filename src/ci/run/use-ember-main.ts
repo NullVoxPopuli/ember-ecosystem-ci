@@ -5,6 +5,7 @@ import { cp } from "node:fs/promises";
 import { detectPackageManager } from "nypm";
 import assert from "node:assert";
 import { existsSync } from "node:fs";
+import { packageJson } from "ember-apply";
 
 const prebuiltTgzName = 'ember-source-main.tgz';
 
@@ -32,7 +33,6 @@ export async function useEmberMain() {
     logCopy(sourceTarget, tgzPath);
     await cp(tgzPath, sourceTarget);
 
-
     /**
       * For now, all projects are pnpm, so we don't need to detect package manager
       */
@@ -40,31 +40,34 @@ export async function useEmberMain() {
 
     assert(packageManager, `Could not determine package manager in ${dir}`);
 
-    const isWorkspaceRoot = existsSync(join(dirToTestIn, 'pnpm-lock.yaml'));
-    const isDirWorkspaceRoot = existsSync(join(dir, 'pnpm-lock.yaml'));
+    let specifier = `file:${tgzPath}`;
 
-    let installMainCommand = `${packageManager.name} add ${tgzPath}`;
+    function mutateJson(json: any) {
+      json.pnpm ||= {};
+      json.pnpm.overrides ||= {};
+      json.overrides ||= {};
 
-    let result = true;
+      json.pnpm.overrides['ember-source'] = specifier;
+      json.overrides['ember-source'] = specifier;
+
+      if (json.devDependencies?.['ember-source']) {
+        json.devDependencies['ember-source'] = specifier;
+      }
+      if (json.dependencies?.['ember-source']) {
+        json.dependencies['ember-source'] = specifier;
+      }
+    }
+
+    await packageJson.modify(mutateJson, dir)
 
     if (dirToTestIn !== dir) {
-      let cmd = installMainCommand;
-      if (isDirWorkspaceRoot) {
-        cmd += ' -w';
-      }
-
-      let resultA = await run(cmd, dir);
-
-      result = result && resultA;
+      await packageJson.modify(mutateJson, dirToTestIn)
     }
 
+    let isNpm = packageManager.name === 'npm';
+    let installMainCommand = `${packageManager.name} install ${isNpm ? '--force' : ''}`;
 
-    if (isWorkspaceRoot && dirToTestIn !== dir) {
-      installMainCommand += ' -w';
-    }
-
-    let resultB = await run(installMainCommand, dirToTestIn);
-    result = result && resultB;
+    let result = await run(installMainCommand, dirToTestIn);
 
     config.state.useEmberMain = result;
 
