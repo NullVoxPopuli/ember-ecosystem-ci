@@ -20,6 +20,18 @@ interface Config extends Entry {
   }
 }
 
+
+assert(NAME || CONFIG, `One of --name or --config is a required argument`)
+
+if (NAME) {
+  assert(!CONFIG, `Cannot set both --name and --config`);
+}
+if (CONFIG) {
+  assert(!NAME, `Cannot set both --name and --config`);
+}
+
+
+
 export async function writeConfig(config: Config): Promise<void> {
   let filePath = config.state.configPath;
 

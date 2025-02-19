@@ -62,4 +62,9 @@ if (import.meta.filename === process.argv[1]) {
 
   let config = await getConfig();
   log.inspect(config);
+
+  if (!config.state.useEmberMain) {
+    console.error('Installing ember-source @ main failed');
+    process.exit(1);
+  }
 }

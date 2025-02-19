@@ -25,16 +25,6 @@ console.log({
   '--config': CONFIG,
 });
 
-assert(NAME || CONFIG, `One of --name or --config is a required argument`)
-
-if (NAME) {
-  assert(!CONFIG, `Cannot set both --name and --config`);
-}
-if (CONFIG) {
-  assert(!NAME, `Cannot set both --name and --config`);
-}
-
-
 function bool(name: string) {
   return args.includes(name);
 }

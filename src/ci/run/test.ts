@@ -26,4 +26,9 @@ if (import.meta.filename === process.argv[1]) {
 
   let config = await getConfig();
   log.inspect(config);
+
+  if (!config.state.test) {
+    console.error('Test failed');
+    process.exit(1);
+  }
 }
