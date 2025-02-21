@@ -59,7 +59,6 @@ jobs:
   #
   # TODO: when anything falis here, auto-open an issue on ember-cli
   new_app:
-    needs: [preflight] # not explicitly required, but if this fails, I don't want any of CI running
     name: '📦 App'
     runs-on: ubuntu-latest
     strategy:
@@ -88,7 +87,6 @@ jobs:
   # Tests ember-cli
   #
   new_library:
-    needs: [preflight] # not explicitly required, but if this fails, I don't want any of CI running
     name: '📦 Library' # V2 Addon blueprint
     runs-on: ubuntu-latest
     strategy:
