@@ -1,0 +1,51 @@
+name: LTS Support
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+  workflow_dispatch: {}
+
+concurrency:
+   group: lts-${{ github.head_ref || github.ref }}
+   cancel-in-progress: true
+
+env:
+  cli: git@github.com:ember-cli/ember-cli.git
+  source: git@github.com:emberjs/ember.js.git
+
+jobs:
+  ##################
+  #
+  # Tests ember-cli + the TS Rolling support Policy
+  #
+  # The last two supported LTSes must have a version before we can drop it
+  # This gives folks 24 weeks (at a minimum) to update their TypeScript version
+  #
+  ts_support:
+    name: 'Rolling TS: cli@${{ matrix.lts }}, ts@${{ matrix.ts }}'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        lts:
+          - '6.2' # not LTS, but latest release 
+          - '5.12' 
+          - '5.8'
+          - '5.4'
+        ts:
+          - '5.8' # Februrary 2025
+          - '5.5' # June 2024
+          - '5.4' # March 2024
+          - '5.0' # March 2023
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: |
+          pnpm test:lts \
+            --test="ts" \
+            --cli-version="${{ matrix.lts }}" \
+            --devDependency="typescript@${{ matrix.ts }}"
+
