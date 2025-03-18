@@ -2,7 +2,12 @@ import { str } from '#args';
 import { prepare, bool2Text, logRun, pf, run, writeOutput } from '#utils';
 import { execaCommand } from 'execa';
 import assert from 'node:assert';
+import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+
+const tmp = join(process.cwd(), 'tmp', 'packages');
+
+await mkdir(tmp, { recursive: true });
 
 const TEST = str('--test');
 const CLI_VERSION = str('--cli-version');
