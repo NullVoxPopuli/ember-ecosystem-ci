@@ -4,6 +4,7 @@ import { execaCommand } from 'execa';
 import assert from 'node:assert';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { packageJson } from 'ember-apply';
 
 
 const TEST = str('--test');
@@ -39,8 +40,9 @@ switch (TEST) {
     let manager = 'pnpm';
     let install = await run(`${manager} update ${DEV_DEPENDENCY}`);
 
-    let version = DEV_DEPENDENCY.split('@')[1];
+    let [devDep, version] = DEV_DEPENDENCY.split('@');
 
+    assert(devDep, `Need a dep in --devDependency`);
     assert(version, `Need a version on --devDependency`);
 
     let [major, minor] = version.split('.');
@@ -48,11 +50,20 @@ switch (TEST) {
     assert(major, `need major version`);
     assert(minor, `need minor version`);
 
-    if (parseInt(major, 10) <= 5 && parseInt(minor, 10) <= 4) {
-      let tsconfig = await run(`${manager} update @tsconfig/ember@3.0.8`);
+    let depsToAdd: Record<string, string> = { [devDep]: version };
 
-      install &&= tsconfig;
+    if (parseInt(major, 10) <= 5 && parseInt(minor, 10) <= 4) {
+      depsToAdd['@tsconfig/ember'] = '3.0.8';
     }
+
+    if (CLI_VERSION.startsWith('5')) {
+      depsToAdd['@ember/test-waiters'] = '^3.0.0';
+      depsToAdd['@ember/test-helpers'] = '^4.0.0';
+    }
+
+    await packageJson.addDevDependencies(depsToAdd, join(tmp, 'my-project'));
+
+    await run(`${manager} install --no-lockfile`);
 
     let lint = await run(`${manager} run lint`)
     let lintFix = await run(`${manager} run lint:fix`)
