@@ -24,7 +24,7 @@ jobs:
   # This gives folks 24 weeks (at a minimum) to update their TypeScript version
   #
   ts_support:
-    name: '🔵 TS Rolling Support'
+    name: 'TS Rolling Support'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
