@@ -1,6 +1,13 @@
+
 # ember-ecosystem-ci
 
 This is a suite of slow, high-fidelity, nightly tests that ensure different aspects of the ember ecosystem continue to work.
+
+Quick Links
+
+[![ember-cli @ main](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/ember-cli.yml/badge.svg)](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/ember-cli.yml)
+[![ember-source @ main](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/ember-source.yml/badge.svg)](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/ember-source.yml)
+[![LTS Support](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/lts.yml/badge.svg)](https://github.com/NullVoxPopuli/ember-ecosystem-ci/actions/workflows/lts.yml)
 
 ## What's tested:
 

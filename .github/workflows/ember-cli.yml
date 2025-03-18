@@ -1,0 +1,80 @@
+name: "ember-cli @ main" 
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+  workflow_dispatch: {}
+  schedule:
+    - cron: 0 0 * * *
+
+concurrency:
+   group: ember-cli-${{ github.head_ref || github.ref }}
+   cancel-in-progress: true
+
+env:
+  cli: git@github.com:ember-cli/ember-cli.git
+  source: git@github.com:emberjs/ember.js.git
+
+jobs:
+  ##################
+  #
+  # Tests ember-cli
+  #
+  # TODO: when anything falis here, auto-open an issue on ember-cli
+  new_app:
+    name: '📦 App'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        args: 
+          - '' 
+          - '--pnpm' 
+          - '--typescript' 
+          - '--embroider' 
+          - '--embroider --typescript' 
+          - '--embroider --typescript --pnpm' 
+          - '--blueprint @embroider/app-blueprint --pnpm' 
+          - '--blueprint @embroider/app-blueprint --pnpm --typescript' 
+          - '--blueprint @embroider/app-blueprint --npm' 
+          - '--blueprint @embroider/app-blueprint --npm --typescript' 
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm test:ember-cli ${{ matrix.args }}
+
+  ##################
+  #
+  # Tests ember-cli
+  #
+  new_library:
+    name: '📦 Library' # V2 Addon blueprint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        args: 
+          - '--npm' 
+          - '--pnpm' 
+          - '--typescript --npm' 
+          - '--typescript --pnpm' 
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wyvox/action-setup-pnpm@v3
+      - run: pnpm test:library ${{ matrix.args }}
+
+
+
+  # TODO: post to Discord?
+  # output:
+  #   needs: [new_library, new_app, ecosystem]
+  #   if: always()
+  #   name: 'Output'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: wyvox/action-setup-pnpm@v3
