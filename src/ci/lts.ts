@@ -5,9 +5,6 @@ import assert from 'node:assert';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const tmp = join(process.cwd(), 'tmp', 'packages');
-
-await mkdir(tmp, { recursive: true });
 
 const TEST = str('--test');
 const CLI_VERSION = str('--cli-version');
@@ -15,6 +12,7 @@ const DEV_DEPENDENCY = str('--devDependency');
 
 assert(CLI_VERSION, `--cli-version is required`);
 
+const tmp = join(process.cwd(), 'tmp');
 let cliBin = '';
 
 if (CLI_VERSION === 'main') {
@@ -22,6 +20,8 @@ if (CLI_VERSION === 'main') {
 
   cliBin = cli.dir;
 } else {
+
+  await mkdir(tmp, { recursive: true });
   cliBin = `npx ember-cli@${CLI_VERSION}`
 }
 
