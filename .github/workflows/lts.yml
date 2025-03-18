@@ -24,13 +24,13 @@ jobs:
   # This gives folks 24 weeks (at a minimum) to update their TypeScript version
   #
   ts_support:
-    name: 'TS Rolling Support'
+    name: 'Rolling TS: cli@${{ matrix.lts }}, ts@${{ matrix.ts }}'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         lts:
-          - 5.12: 
+          - 5.12 
           - 5.8
           - 5.4
           - main
