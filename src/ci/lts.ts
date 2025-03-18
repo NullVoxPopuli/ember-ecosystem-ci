@@ -55,7 +55,7 @@ switch (TEST) {
     }
 
     if (CLI_VERSION.startsWith('5')) {
-      await run(`${manager} add @ember/test-waiters`);
+      await run(`${manager} add @ember/test-waiters@^3.0.0`);
     }
 
     let lint = await run(`${manager} run lint`)
