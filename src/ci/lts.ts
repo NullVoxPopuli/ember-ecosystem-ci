@@ -34,9 +34,26 @@ switch (TEST) {
     logRun(command);
     await execaCommand(command, { cwd: tmp });
 
+    assert(DEV_DEPENDENCY, `--devDependency needed for this test`);
 
     let manager = 'pnpm';
     let install = await run(`${manager} update ${DEV_DEPENDENCY}`);
+
+    let version = DEV_DEPENDENCY.split('@')[1];
+
+    assert(version, `Need a version on --devDependency`);
+
+    let [major, minor] = version.split('.');
+
+    assert(major, `need major version`);
+    assert(minor, `need minor version`);
+
+    if (parseInt(major, 10) <= 5 && parseInt(minor, 10) <= 4) {
+      let tsconfig = await run(`${manager} update @tsconfig/ember@3.0.8`);
+
+      install &&= tsconfig;
+    }
+
     let lint = await run(`${manager} run lint`)
     let lintFix = await run(`${manager} run lint:fix`)
     let test = await run(`${manager} run test:ember`)
