@@ -32,7 +32,7 @@ switch (TEST) {
     let command = `${cliBin} new my-project --skip-install --typescript --pnpm`
 
     logRun(command);
-    await execaCommand(command, { cwd: 'tmp' });
+    await execaCommand(command, { cwd: tmp });
 
 
     let manager = 'pnpm';

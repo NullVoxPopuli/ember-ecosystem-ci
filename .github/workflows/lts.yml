@@ -30,15 +30,14 @@ jobs:
       fail-fast: false
       matrix:
         lts:
-          - 5.12 
-          - 5.8
-          - 5.4
-          - main
+          - '5.12' 
+          - '5.8'
+          - '5.4'
         ts:
-          - 5.8 # Februrary 2025
-          - 5.5 # June 2024
-          - 5.4 # March 2024
-          - 5.0 # March 2023
+          - '5.8' # Februrary 2025
+          - '5.5' # June 2024
+          - '5.4' # March 2024
+          - '5.0' # March 2023
 
     steps:
       - uses: actions/checkout@v4
