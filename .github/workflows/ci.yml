@@ -81,7 +81,6 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:ember-cli ${{ matrix.args }}
 
-
   ##################
   #
   # Tests ember-cli
