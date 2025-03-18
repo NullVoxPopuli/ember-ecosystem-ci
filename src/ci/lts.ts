@@ -54,6 +54,10 @@ switch (TEST) {
       install &&= tsconfig;
     }
 
+    if (CLI_VERSION.startsWith('5')) {
+      await run(`${manager} add @ember/test-waiters`);
+    }
+
     let lint = await run(`${manager} run lint`)
     let lintFix = await run(`${manager} run lint:fix`)
     let test = await run(`${manager} run test:ember`)
