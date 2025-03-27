@@ -24,7 +24,7 @@ jobs:
   #
   # TODO: when anything falis here, auto-open an issue on ember-cli
   new_app:
-    name: '📦 App'
+    name: '🖥️ App'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
