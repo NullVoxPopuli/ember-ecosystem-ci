@@ -10,7 +10,7 @@ let { cli } = await prepare({ cli: true, source: false });
 const [, , ...args] = process.argv;
 const bin = join(cli.dir, 'bin', 'ember');
 
-const command = `${bin} addon my-project --blueprint @embroider/addon-blueprint ${args.join(' ')}`
+const command = `${bin} addon my-project --blueprint @ember/addon-blueprint ${args.join(' ')}`
 
 
 logRun(command);
