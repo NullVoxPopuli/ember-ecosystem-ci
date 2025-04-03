@@ -24,7 +24,7 @@ let install = await run(`${manager} install ${manager === 'npm' ? '--force' : ''
 let lint = await run(`${manager} run lint`)
 let lintFix = await run(`${manager} run lint:fix`)
 let prodbuild = await run(`${manager} run build`)
-let test = await run(`${manager} run test:ember`)
+let test = await run(`${manager} run test`)
 
 let isSuccess = [lint, lintFix, test, prodbuild].every(Boolean);
 
