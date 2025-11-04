@@ -10,7 +10,7 @@ let { cli } = await prepare({ cli: true, source: false });
 const [, , ...args] = process.argv;
 const bin = join(cli.dir, 'bin', 'ember');
 
-const command = `${bin} addon my-project --blueprint @embroider/addon-blueprint ${args.join(' ')}`
+const command = `${bin} addon my-project --blueprint @ember/addon-blueprint ${args.join(' ')}`
 
 
 logRun(command);
@@ -24,7 +24,7 @@ let install = await run(`${manager} install ${manager === 'npm' ? '--force' : ''
 let lint = await run(`${manager} run lint`)
 let lintFix = await run(`${manager} run lint:fix`)
 let prodbuild = await run(`${manager} run build`)
-let test = await run(`${manager} run test:ember`)
+let test = await run(`${manager} run test`)
 
 let isSuccess = [lint, lintFix, test, prodbuild].every(Boolean);
 
