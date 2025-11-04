@@ -78,15 +78,25 @@ jobs:
       # All of this can be ran locally via
       # pnpm test:ecosystem --name=@ember/test-helpers (for example)
       - name: "Clone"
-        run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
+        run: |
+          pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
+          tree -I node_modules
       - name: "Setup / Build"
-        run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
+        run: |
+          pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
+          tree -I node_modules
       - name: "Install ember-source @ main"
-        run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
+        run: |
+          pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
+          tree -I node_modules
       - name: "Verify that ember-source @ main is resolved"
-        run: pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
+        run: |
+          pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
+          tree -I node_modules
       - name: "Test"
-        run: pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
+        run: |
+          pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
+          tree -I node_modules
 
   # TODO: post to Discord?
   # output:
