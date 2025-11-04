@@ -1,4 +1,4 @@
-name: "ember-source @ main" 
+name: "ember-source @ main"
 
 on:
   push:
@@ -10,8 +10,8 @@ on:
     - cron: 0 0 * * *
 
 concurrency:
-   group: ember-source-${{ github.head_ref || github.ref }}
-   cancel-in-progress: true
+  group: ember-source-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 env:
   cli: git@github.com:ember-cli/ember-cli.git
@@ -26,17 +26,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
       - name: Build ember-source @ main
-        run: pnpm ci:run ./src/ci/build-ember-source.ts  
+        run: pnpm ci:run ./src/ci/build-ember-source.ts
       - uses: actions/upload-artifact@v4
         with:
           name: ember-source-main-tgz
           path: "*.tgz"
-          if-no-files-found: 'error'
+          if-no-files-found: "error"
           retention-days: 1
           overwrite: true
 
-
-  preflight: 
+  preflight:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
@@ -49,7 +48,6 @@ jobs:
         run: |
           matrix_json=$(node --no-warnings --experimental-strip-types ./src/ci/preflight.ts)
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
-
 
   ##################
   #
@@ -72,7 +70,7 @@ jobs:
       # Used by ember-data
       - uses: oven-sh/setup-bun@v2
 
-      - name: Download built ember-source 
+      - name: Download built ember-source
         uses: actions/download-artifact@v4
         with:
           name: ember-source-main-tgz
@@ -80,18 +78,15 @@ jobs:
       # All of this can be ran locally via
       # pnpm test:ecosystem --name=@ember/test-helpers (for example)
       - name: "Clone"
-        run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}  
+        run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
       - name: "Setup / Build"
-        run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}  
+        run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
       - name: "Install ember-source @ main"
-        run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}  
+        run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
       - name: "Verify that ember-source @ main is resolved"
-        run: pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}  
+        run: pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
       - name: "Test"
-        run: pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}  
-
-
-
+        run: pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
 
   # TODO: post to Discord?
   # output:
