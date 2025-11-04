@@ -20,7 +20,7 @@ let manager = command.includes('--pnpm') ? 'pnpm' : 'npm';
 let install = await run(`${manager} install ${manager === 'npm' ? '--force' : ''}`);
 let lint = await run(`${manager} run lint`)
 let lintFix = await run(`${manager} run lint:fix`)
-let test = await run(`${manager} run test:ember`)
+let test = await run(`${manager} run test`)
 let prodbuild = await run(`${manager} run build`)
 
 
