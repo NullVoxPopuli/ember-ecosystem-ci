@@ -19,7 +19,7 @@
     "test:ecosystem": "node --no-warnings --experimental-strip-types ./src/ecosystem.ts"
   },
   "engines": {
-    "node": "^22.14.0"
+    "node": ">= 24"
   },
   "dependencies": {
     "@manypkg/get-packages": "^3.1.0",
