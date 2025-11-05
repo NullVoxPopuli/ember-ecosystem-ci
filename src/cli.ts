@@ -38,7 +38,11 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
 
   try {
     let result = await execaCommand(realCommand,
-      { cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true });
+      {
+        cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true, env: {
+          ...process.env,
+        }
+      });
 
 
     return result.exitCode === 0;
