@@ -80,21 +80,13 @@ jobs:
       - name: "Clone"
         run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
       - name: "Setup / Build"
-        run: |
-          tree -I node_modules tmp/tests/${{matrix.name}}
-          pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
+        run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
       - name: "Install ember-source @ main"
-        run: |
-          tree -I node_modules tmp/tests/${{matrix.name}}
-          pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
+        run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
       - name: "Verify that ember-source @ main is resolved"
-        run: |
-          tree -I node_modules tmp/tests/${{matrix.name}}
-          pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
+        run: pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
       - name: "Test"
-        run: |
-          tree -I node_modules tmp/tests/${{matrix.name}}
-          pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
+        run: pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
 
   # TODO: post to Discord?
   # output:
