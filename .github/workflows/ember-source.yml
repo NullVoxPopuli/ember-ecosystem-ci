@@ -72,6 +72,7 @@ jobs:
       - uses: moonrepo/setup-toolchain@v0
         with:
           auto-install: true
+          auto-setup: true
       - name: Install our own dependencies
         run: pnpm install
 
