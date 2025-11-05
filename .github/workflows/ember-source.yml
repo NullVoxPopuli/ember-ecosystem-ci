@@ -84,6 +84,8 @@ jobs:
 
       # All of this can be ran locally via
       # pnpm test:ecosystem --name=@ember/test-helpers (for example)
+      #
+      # Or run the commands below for individual steps
       - name: "Clone"
         run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
       - name: "Setup / Build"
