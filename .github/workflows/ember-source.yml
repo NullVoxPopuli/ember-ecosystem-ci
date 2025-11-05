@@ -16,7 +16,7 @@ concurrency:
 env:
   cli: git@github.com:ember-cli/ember-cli.git
   source: git@github.com:emberjs/ember.js.git
-  PROTO_LOG: true
+  PROTO_LOG: trace
 
 jobs:
   build_ember-source:
