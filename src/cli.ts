@@ -1,4 +1,4 @@
-import { execaCommand } from "execa";
+import { $, execaCommand } from "execa";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { styleText } from "node:util";
@@ -37,12 +37,11 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
   logRun(realCommand);
 
   try {
-    let result = await execaCommand(realCommand,
-      {
-        cwd: inDir, stdio: 'inherit', preferLocal: true, shell: process.env.SHELL ?? true, env: {
-          ...process.env,
-        }
-      });
+    let result = await $({
+      cwd: inDir, stdio: 'inherit', preferLocal: true, shell: process.env.SHELL ?? true, env: {
+        ...process.env,
+      }
+    })(realCommand);
 
 
     return result.exitCode === 0;
