@@ -65,9 +65,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      # Most projects use pnpm
-      - uses: wyvox/action-setup-pnpm@v3
-      # Used by ember-data
+      # Proto auto-install tools based on the current directory
+      # Handels the most wide variety of configurations
+      # (better than Volta, Corepack, nvm, asdf, etc)
+      #   (because it supports the configs from all of those)
+      - uses: moonrepo/setup-toolchain@v0
+        with:
+          auto-install: true
       - uses: oven-sh/setup-bun@v2
 
       - name: Download built ember-source
