@@ -39,7 +39,7 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
   try {
     let result = await execaCommand(realCommand,
       {
-        cwd: inDir, stdio: 'inherit', preferLocal: true, shell: true, env: {
+        cwd: inDir, stdio: 'inherit', preferLocal: true, shell: process.env.SHELL ?? true, env: {
           ...process.env,
         }
       });
