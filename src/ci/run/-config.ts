@@ -5,13 +5,14 @@ import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-
 interface Config extends Entry {
   state: {
     configPath: string;
     tmp: string;
     clone: boolean;
     setup: boolean;
+    build: boolean | 'not specified';
+    prepareTest: boolean | 'not specified';
     test: boolean;
     useEmberMain: boolean;
     cleanedName: string;
@@ -97,6 +98,7 @@ export async function getConfig(): Promise<Config> {
     state: {
       clone: false,
       setup: false,
+      build: false,
       test: false,
       useEmberMain: false,
       ...(json.state ?? {}),

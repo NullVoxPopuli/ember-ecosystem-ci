@@ -1,10 +1,18 @@
+export type Command = string | {
+  run: string;
+  directory: string;
+}
 export interface Entry {
   // This will show up in the CI matrix
   name: string;
   // git URL to checkout the code
   repo: string;
   // What to do for install, any needed prebuild, etc
-  setup: string;
+  setup: Command;
+  // If preparation is needed after install, specify here
+  build?: Command;
+  // Sometimes tests need a build or some preparation before running
+  prepareTest?: Command;
   // Comamnd to run for testing, must exit with status code 0 to indicate success
   test: string;
   // Optionally directory to run the 'test' command in.
@@ -21,7 +29,8 @@ export const config: Entry[] = [
   {
     name: '@ember/test-helpers',
     repo: 'https://github.com/emberjs/ember-test-helpers.git',
-    setup: 'pnpm install; ( cd addon && pnpm build && pnpm install --force )',
+    setup: 'pnpm install',
+    build: { directory: 'addon', run: 'pnpm build && pnpm install --force' },
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
@@ -31,28 +40,30 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test'
   },
-  // {
-  //   name: 'ember-data',
-  //   repo: 'https://github.com/emberjs/data.git',
-  //   setup: 'pnpm install --ignore-scripts; pnpm prepare',
-  //   testDir: 'tests/main',
-  //   test: 'pnpm test:ember'
-  // },
+  {
+    name: 'warp-drive',
+    repo: 'https://github.com/warp-drive-data/warp-drive.git',
+    setup: 'pnpm install',
+    build: 'pnpm prepare',
+    testDir: 'tests/framework-ember',
+    test: 'pnpm build:tests && pnpm test'
+  },
   {
     name: 'ember-page-title',
     repo: 'https://github.com/ember-cli/ember-page-title.git',
-    setup: 'pnpm install && pnpm build && pnpm i -f',
+    setup: 'pnpm install',
+    build: 'pnpm build',
+    prepareTest: 'pnpm i -f',
     testDir: 'test-app',
     test: 'pnpm ember test'
   },
   {
     name: 'ember-provide-consume-context',
     repo: 'https://github.com/customerio/ember-provide-consume-context.git',
-    // Ignoring npm usage in this repo
-    // npm is insufferable with pre-release packages
-    setup: 'pnpm install && pnpm run build',
+    setup: 'npm install',
+    build: 'npm run build',
     testDir: 'test-app',
-    test: 'pnpm run test:ember'
+    test: 'npm exec ember test'
   },
   {
     name: 'package-majors',
@@ -60,25 +71,21 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test:ember'
   },
-  // {
-  //  name: 'ember-resources',
-  //  repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
-  //  setup: 'pnpm install; pnpm build; pnpm i -f',
-  //  testDir: 'test-app',
-  //  test: 'pnpm test'
-  // },
+  {
+    name: 'ember-resources',
+    repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
+    setup: 'pnpm install',
+    build: 'pnpm build',
+    prepareTest: 'pnpm i -f',
+    testDir: 'test-app',
+    test: 'pnpm test'
+  },
   {
     name: 'ember-simple-auth',
     repo: 'https://github.com/mainmatter/ember-simple-auth.git',
-    setup: 'pnpm install; cd packages/ember-simple-auth && pnpm build',
+    setup: 'pnpm install',
+    build: { run: 'pnpm build', directory: 'packages/ember-simple-auth' },
     testDir: 'packages/test-app',
     test: 'pnpm test'
   },
-  // {
-  //   name: '@sentry/ember',
-  //   repo: 'https://github.com/getsentry/sentry-javascript.git',
-  //   setup: 'pnpm install',
-  //   testDir: 'packages/ember',
-  //   test: 'pnpm test'
-  // },
 ]

@@ -88,12 +88,16 @@ jobs:
       # Or run the commands below for individual steps
       - name: "Clone"
         run: pnpm ci:run ./src/ci/run/clone.ts --name=${{matrix.name}}
-      - name: "Setup / Build"
+      - name: "Setup"
         run: pnpm ci:run ./src/ci/run/setup.ts --name=${{matrix.name}}
+      - name: "Build"
+        run: pnpm ci:run ./src/ci/run/build.ts --name=${{matrix.name}}
       - name: "Install ember-source @ main"
         run: pnpm ci:run ./src/ci/run/use-ember-main.ts --name=${{matrix.name}}
       - name: "Verify that ember-source @ main is resolved"
         run: pnpm ci:run ./src/ci/run/verify-ember-source-installed.ts --name=${{matrix.name}}
+      - name: "Prepare Test"
+        run: pnpm ci:run ./src/ci/run/prepare-test.ts --name=${{matrix.name}}
       - name: "Test"
         run: pnpm ci:run ./src/ci/run/test.ts --name=${{matrix.name}}
 

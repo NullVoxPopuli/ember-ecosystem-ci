@@ -1,7 +1,7 @@
 import { getPackages } from "@manypkg/get-packages";
 import { packageJson } from 'ember-apply';
 import { getConfig, writeConfig } from "./-config.ts";
-import { log, run } from "#utils";
+import { log, parseCommand, run, safeJoin } from "#utils";
 
 export async function setup() {
   let config = await getConfig();
@@ -23,14 +23,15 @@ export async function setup() {
       }, pkg.dir)
     }
 
-    let result = await run(setupScript, dir);
+    let setup = parseCommand(setupScript);
+    let result = await run(setup.run, safeJoin(dir, setup.directory));
 
     config.state.setup = result;
 
     await writeConfig(config);
   }
 
-  return config.state.clone;
+  return config.state.setup;
 }
 
 if (import.meta.filename === process.argv[1]) {

@@ -1,12 +1,17 @@
-import { $, execaCommand } from "execa";
+import { $ } from "execa";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { styleText } from "node:util";
 import { v4 as uuidv4 } from 'uuid';
 
-export function pf(bool: boolean) {
-  return bool ? styleText('green', 'pass') : styleText('red', 'fail');
+export function pf(text: boolean | string) {
+  if (typeof text === 'string') {
+    return styleText('yellow', text);
+  }
+
+  return text ? styleText('green', 'pass') : styleText('red', 'fail');
 }
+
 export function bool2Text(bool: boolean) {
   return bool ? 'pass' : 'fail';
 }
