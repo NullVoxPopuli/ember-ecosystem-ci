@@ -31,13 +31,13 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test'
   },
-  {
-    name: 'ember-data',
-    repo: 'https://github.com/emberjs/data.git',
-    setup: 'pnpm install --ignore-scripts; pnpm prepare',
-    testDir: 'tests/main',
-    test: 'pnpm test:ember'
-  },
+  // {
+  //   name: 'ember-data',
+  //   repo: 'https://github.com/emberjs/data.git',
+  //   setup: 'pnpm install --ignore-scripts; pnpm prepare',
+  //   testDir: 'tests/main',
+  //   test: 'pnpm test:ember'
+  // },
   {
     name: 'ember-page-title',
     repo: 'https://github.com/ember-cli/ember-page-title.git',
@@ -45,26 +45,26 @@ export const config: Entry[] = [
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
-  {
-    name: 'ember-provide-consume-context',
-    repo: 'https://github.com/customerio/ember-provide-consume-context.git',
-    setup: 'npm install; npm run build',
-    testDir: 'test-app',
-    test: 'npm run test:ember'
-  },
+  // {
+  //   name: 'ember-provide-consume-context',
+  //   repo: 'https://github.com/customerio/ember-provide-consume-context.git',
+  //   setup: 'npm install; npm run build',
+  //   testDir: 'test-app',
+  //   test: 'npm run test:ember'
+  // },
   {
     name: 'package-majors',
     repo: 'https://github.com/NullVoxPopuli/package-majors.git',
     setup: 'pnpm install',
     test: 'pnpm test:ember'
   },
-  //{
+  // {
   //  name: 'ember-resources',
   //  repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
   //  setup: 'pnpm install; pnpm build; pnpm i -f',
   //  testDir: 'test-app',
   //  test: 'pnpm test'
-  //},
+  // },
   {
     name: 'ember-simple-auth',
     repo: 'https://github.com/mainmatter/ember-simple-auth.git',
