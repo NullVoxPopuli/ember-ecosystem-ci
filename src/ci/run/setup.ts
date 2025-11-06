@@ -18,7 +18,7 @@ export async function setup() {
      */
     let repoInfo = await getPackages(dir);
     for (let pkg of repoInfo.packages) {
-      packageJson.modify(json => {
+      await packageJson.modify(json => {
         delete json.engines
       }, pkg.dir)
     }
