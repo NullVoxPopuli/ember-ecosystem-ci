@@ -73,15 +73,16 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test:ember'
   },
-  {
-    name: 'ember-resources',
-    repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
-    setup: 'pnpm install',
-    build: 'pnpm build',
-    prepareTest: 'pnpm i -f',
-    testDir: 'test-app',
-    test: 'pnpm test'
-  },
+  // Disabled because ember-cli is likely needs upgraded in this test app
+  // {
+  //   name: 'ember-resources',
+  //   repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
+  //   setup: 'pnpm install',
+  //   build: 'pnpm build',
+  //   prepareTest: 'pnpm i -f',
+  //   testDir: 'test-app',
+  //   test: 'pnpm test'
+  // },
   {
     name: 'ember-simple-auth',
     repo: 'https://github.com/mainmatter/ember-simple-auth.git',

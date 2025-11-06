@@ -33,6 +33,8 @@ export async function useEmberMain() {
     logCopy(sourceTarget, tgzPath);
     await cp(tgzPath, sourceTarget);
 
+    console.info(`${tgzPath} copied to ${sourceTarget}`);
+
     /**
       * For now, all projects are pnpm, so we don't need to detect package manager
       */
