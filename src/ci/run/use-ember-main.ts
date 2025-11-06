@@ -46,9 +46,11 @@ export async function useEmberMain() {
       json.pnpm ||= {};
       json.pnpm.overrides ||= {};
       json.overrides ||= {};
+      json.resolutions ||= {};
 
       json.pnpm.overrides['ember-source'] = specifier;
       json.overrides['ember-source'] = specifier;
+      json.resolutions['ember-source'] = specifier;
 
       if (json.devDependencies?.['ember-source']) {
         json.devDependencies['ember-source'] = specifier;
