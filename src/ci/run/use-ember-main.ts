@@ -33,8 +33,6 @@ export async function useEmberMain() {
     logCopy(sourceTarget, tgzPath);
     await cp(tgzPath, sourceTarget);
 
-    console.info(`${tgzPath} copied to ${sourceTarget}`);
-
     /**
       * For now, all projects are pnpm, so we don't need to detect package manager
       */
@@ -63,9 +61,11 @@ export async function useEmberMain() {
     }
 
     await packageJson.modify(mutateJson, dir)
+    log.inspect(await packageJson.read(dir));
 
     if (dirToTestIn !== dir) {
       await packageJson.modify(mutateJson, dirToTestIn)
+      log.inspect(await packageJson.read(dirToTestIn));
     }
 
     let isNpm = packageManager.name === 'npm';
