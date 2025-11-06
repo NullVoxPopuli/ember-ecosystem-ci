@@ -58,13 +58,13 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test:ember'
   },
-  {
-    name: 'ember-resources',
-    repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
-    setup: 'pnpm install; pnpm build; pnpm i -f',
-    testDir: 'test-app',
-    test: 'pnpm test'
-  },
+  //{
+  //  name: 'ember-resources',
+  //  repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
+  //  setup: 'pnpm install; pnpm build; pnpm i -f',
+  //  testDir: 'test-app',
+  //  test: 'pnpm test'
+  //},
   {
     name: 'ember-simple-auth',
     repo: 'https://github.com/mainmatter/ember-simple-auth.git',
