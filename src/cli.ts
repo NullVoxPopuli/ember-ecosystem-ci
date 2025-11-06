@@ -40,7 +40,7 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
     let result = await $({
       cwd: inDir,
       stdio: 'inherit',
-      preferLocal: true,
+      // preferLocal: true,
       shell: process.env[0] ?? true,
       /**
        * This is default, but just in case

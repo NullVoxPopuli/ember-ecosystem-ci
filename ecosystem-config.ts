@@ -48,7 +48,8 @@ export const config: Entry[] = [
   {
     name: 'ember-provide-consume-context',
     repo: 'https://github.com/customerio/ember-provide-consume-context.git',
-    setup: 'npm install && npm run build',
+    // Ignoring npm usage in this repo
+    setup: 'pnpm install && pnpm run build',
     testDir: 'test-app',
     test: 'npm run test:ember'
   },
