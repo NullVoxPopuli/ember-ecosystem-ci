@@ -8,7 +8,7 @@ export async function prepareTest() {
   let { cloneDir: dir } = state;
 
 
-  if (!state.build) {
+  if (!state.prepareTest) {
     if (!command) {
       config.state.prepareTest = 'not specified';
     } else {

@@ -30,7 +30,8 @@ export const config: Entry[] = [
     name: '@ember/test-helpers',
     repo: 'https://github.com/emberjs/ember-test-helpers.git',
     setup: 'pnpm install',
-    build: { directory: 'addon', run: 'pnpm build && pnpm install --force' },
+    build: { directory: 'addon', run: 'pnpm build' },
+    prepareTest: 'pnpm i -f',
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
@@ -45,8 +46,9 @@ export const config: Entry[] = [
     repo: 'https://github.com/warp-drive-data/warp-drive.git',
     setup: 'pnpm install',
     build: 'pnpm prepare',
+    prepareTest: { run: 'pnpm build:tests', directory: 'tests/framework-ember' },
     testDir: 'tests/framework-ember',
-    test: 'pnpm build:tests && pnpm test'
+    test: 'pnpm test'
   },
   {
     name: 'ember-page-title',
