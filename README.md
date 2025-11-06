@@ -32,7 +32,8 @@ if your project has tests in a sub-directory, your config may look something lik
 {
     name: 'ember-resources',
     repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
-    setup: 'pnpm install; pnpm build',
+    setup: 'pnpm install',
+    build: 'pnpm build',
     testDir: 'test-app',
     test: 'pnpm test:ember'
 }
