@@ -38,7 +38,14 @@ export async function run(cmd: string, inDir = 'tmp/my-project') {
 
   try {
     let result = await $({
-      cwd: inDir, stdio: 'inherit', preferLocal: true, shell: process.env.SHELL ?? true, env: {
+      cwd: inDir,
+      stdio: 'inherit',
+      preferLocal: true,
+      shell: process.env[0] ?? true,
+      /**
+       * This is default, but just in case
+       */
+      env: {
         ...process.env,
       }
     })(realCommand);

@@ -63,7 +63,7 @@ export const config: Entry[] = [
     repo: 'https://github.com/NullVoxPopuli/ember-resources.git',
     setup: 'pnpm install; pnpm build; pnpm i -f',
     testDir: 'test-app',
-    test: 'pnpm ember test'
+    test: 'pnpm test'
   },
   {
     name: 'ember-simple-auth',
