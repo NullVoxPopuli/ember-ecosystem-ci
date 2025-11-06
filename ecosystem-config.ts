@@ -45,13 +45,13 @@ export const config: Entry[] = [
     testDir: 'test-app',
     test: 'pnpm ember test'
   },
-  // {
-  //   name: 'ember-provide-consume-context',
-  //   repo: 'https://github.com/customerio/ember-provide-consume-context.git',
-  //   setup: 'npm install; npm run build',
-  //   testDir: 'test-app',
-  //   test: 'npm run test:ember'
-  // },
+  {
+    name: 'ember-provide-consume-context',
+    repo: 'https://github.com/customerio/ember-provide-consume-context.git',
+    setup: 'npm install && npm run build',
+    testDir: 'test-app',
+    test: 'npm run test:ember'
+  },
   {
     name: 'package-majors',
     repo: 'https://github.com/NullVoxPopuli/package-majors.git',
