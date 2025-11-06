@@ -41,15 +41,17 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     test: 'pnpm test'
   },
-  {
-    name: 'warp-drive',
-    repo: 'https://github.com/warp-drive-data/warp-drive.git',
-    setup: 'pnpm install',
-    build: 'pnpm prepare',
-    prepareTest: { run: 'pnpm build:tests', directory: 'tests/framework-ember' },
-    testDir: 'tests/framework-ember',
-    test: 'pnpm test'
-  },
+  // Disabled because our CI's proto tool isn't active
+  // when we invoke commands via execa
+  // {
+  //   name: 'warp-drive',
+  //   repo: 'https://github.com/warp-drive-data/warp-drive.git',
+  //   setup: 'pnpm install',
+  //   build: 'pnpm prepare',
+  //   prepareTest: { run: 'pnpm build:tests', directory: 'tests/framework-ember' },
+  //   testDir: 'tests/framework-ember',
+  //   test: 'pnpm test'
+  // },
   {
     name: 'ember-page-title',
     repo: 'https://github.com/ember-cli/ember-page-title.git',
