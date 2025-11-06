@@ -41,9 +41,9 @@ export const config: Entry[] = [
   {
     name: 'ember-page-title',
     repo: 'https://github.com/ember-cli/ember-page-title.git',
-    setup: 'pnpm install; ( cd addon && pnpm build && pnpm install --force )',
+    setup: 'pnpm install && pnpm build && pnpm i -f',
     testDir: 'test-app',
-    test: 'pnpm test:ember'
+    test: 'pnpm ember test'
   },
   // {
   //   name: 'ember-provide-consume-context',
