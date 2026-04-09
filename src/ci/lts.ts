@@ -65,9 +65,12 @@ switch (TEST) {
 
     await run(`${manager} install --no-lockfile`);
 
+    let projectPkg = await packageJson.read(join(tmp, 'my-project'));
+    let testScript = projectPkg.scripts?.['test:ember'] ? 'test:ember' : 'test';
+
     let lint = await run(`${manager} run lint`)
     let lintFix = await run(`${manager} run lint:fix`)
-    let test = await run(`${manager} run test:ember`)
+    let test = await run(`${manager} run ${testScript}`)
     let prodbuild = await run(`${manager} run build`)
 
 
@@ -75,11 +78,11 @@ switch (TEST) {
 
     console.info(`
 
-  install    ${pf(install)}
-  lint       ${pf(lint)}
-  lint:fix   ${pf(lintFix)}
-  test:ember ${pf(test)}
-  build      ${pf(prodbuild)}
+  install        ${pf(install)}
+  lint           ${pf(lint)}
+  lint:fix       ${pf(lintFix)}
+  ${testScript}  ${pf(test)}
+  build          ${pf(prodbuild)}
 
   Overall: ${isSuccess}
 `);
@@ -89,7 +92,7 @@ switch (TEST) {
       install: bool2Text(install),
       lint: bool2Text(lint),
       'lint:fix': bool2Text(lintFix),
-      'test:ember': bool2Text(test),
+      [testScript]: bool2Text(test),
       build: bool2Text(prodbuild)
     });
 
