@@ -23,7 +23,7 @@ if (CLI_VERSION === 'main') {
 } else {
 
   await mkdir(tmp, { recursive: true });
-  cliBin = `npx ember-cli@${CLI_VERSION}`
+  cliBin = `pnpm dlx ember-cli@${CLI_VERSION}`
 }
 
 assert(cliBin, `Could not determine the ember-cli bin`);
