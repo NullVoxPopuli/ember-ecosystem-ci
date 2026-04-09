@@ -35,12 +35,6 @@ export const config: Entry[] = [
     testDir: 'test-app',
     test: 'pnpm test:ember'
   },
-  // {
-  //   name: 'crates.io',
-  //   repo: 'https://github.com/rust-lang/crates.io.git',
-  //   setup: 'pnpm install',
-  //   test: 'pnpm test'
-  // },
   // Disabled because our CI's proto tool isn't active
   // when we invoke commands via execa
   // {
