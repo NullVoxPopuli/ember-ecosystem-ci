@@ -43,3 +43,16 @@ jobs:
             --test="ts" \
             --cli-version="${{ matrix.lts }}" \
             --devDependency="typescript@${{ matrix.ts }}"
+
+  notify:
+    name: "Discord Notification"
+    needs: [ts_support]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          status: ${{ needs.ts_support.result }}
+          title: "LTS Support"
+          description: "Rolling TS support matrix results"

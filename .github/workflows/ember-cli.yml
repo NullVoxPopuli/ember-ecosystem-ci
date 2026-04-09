@@ -60,12 +60,15 @@ jobs:
       - uses: wyvox/action-setup-pnpm@v3
       - run: pnpm test:library ${{ matrix.args }}
 
-  # TODO: post to Discord?
-  # output:
-  #   needs: [new_library, new_app, ecosystem]
-  #   if: always()
-  #   name: 'Output'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: wyvox/action-setup-pnpm@v3
+  notify:
+    name: "Discord Notification"
+    needs: [new_app, new_library]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          status: ${{ (needs.new_app.result == 'success' && needs.new_library.result == 'success') && 'success' || 'failure' }}
+          title: "ember-cli @ main"
+          description: "Ecosystem CI results for ember-cli @ main"
