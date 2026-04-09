@@ -47,7 +47,7 @@ jobs:
   notify:
     name: "Discord Notification"
     needs: [ts_support]
-    if: always()
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - uses: sarisia/actions-status-discord@v1

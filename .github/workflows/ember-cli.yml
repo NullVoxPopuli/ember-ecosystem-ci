@@ -63,7 +63,7 @@ jobs:
   notify:
     name: "Discord Notification"
     needs: [new_app, new_library]
-    if: always()
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - uses: sarisia/actions-status-discord@v1
