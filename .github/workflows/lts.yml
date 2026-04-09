@@ -27,11 +27,11 @@ jobs:
       fail-fast: false
       matrix:
         lts:
-          - "6.11"
-          - "6.10"
+          # - "6.12" # April 2026
+          - "6.11" # for now
         ts:
-          - "6.0" # February 2025
-          - "5.9" # November 2024
+          - "6.0" # March 2026
+          - "5.9" # July 2025
           - "5.8" # February 2025
           - "5.5" # June 2024
 
