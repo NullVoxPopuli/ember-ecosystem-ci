@@ -1,4 +1,5 @@
-import { mkdir, rm } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { getConfig, writeConfig } from "./-config.ts";
 import { log, run } from "#utils";
 
@@ -6,7 +7,7 @@ import { log, run } from "#utils";
 export async function clone() {
   let config = await getConfig();
 
-  let { repo, state } = config;
+  let { repo, nodeVersion, state } = config;
   let { tmp, cleanedName, cloneDir: dir } = state;
 
   if (!state.clone) {
@@ -14,6 +15,10 @@ export async function clone() {
     await rm(dir, { force: true, recursive: true });
 
     let result = await run(`git clone ${repo} ${cleanedName}`, tmp);
+
+    if (result && nodeVersion) {
+      await writeFile(join(dir, '.prototools'), `node = "${nodeVersion}"\n`);
+    }
 
     config.state.clone = result;
 
