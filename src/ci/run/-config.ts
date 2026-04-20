@@ -50,6 +50,7 @@ export async function getConfig(): Promise<Config> {
 
   await mkdir(state, { recursive: true });
   await mkdir(tmp, { recursive: true });
+  await writeFile(join(tmp, '.prototools'), '[settings]\nauto-install = true\n', { flag: 'wx' }).catch(() => {});
 
 
   let filePath = '';
