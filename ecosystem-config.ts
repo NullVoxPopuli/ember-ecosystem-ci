@@ -17,9 +17,6 @@ export interface Entry {
   test: string;
   // Optionally directory to run the 'test' command in.
   testDir?: string;
-  // Optionally pin the Node.js version for this project (e.g. '22'). Written as
-  // a .prototools file into the clone dir so proto selects the right version.
-  nodeVersion?: string;
 }
 export const config: Entry[] = [
   {
@@ -27,8 +24,7 @@ export const config: Entry[] = [
     repo: 'https://github.com/emberjs/ember-qunit.git',
     setup: 'pnpm install; ( cd addon && pnpm build )',
     testDir: 'test-app',
-    test: 'pnpm test:ember',
-    nodeVersion: '22'
+    test: 'pnpm test:ember'
   },
   {
     name: '@ember/test-helpers',
@@ -37,8 +33,7 @@ export const config: Entry[] = [
     build: { directory: 'addon', run: 'pnpm build' },
     prepareTest: 'pnpm i -f',
     testDir: 'test-app',
-    test: 'pnpm test:ember',
-    nodeVersion: '22'
+    test: 'pnpm test:ember'
   },
   // Disabled because our CI's proto tool isn't active
   // when we invoke commands via execa
@@ -57,8 +52,7 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     build: 'pnpm build',
     testDir: 'test-app',
-    test: 'pnpm test:ember',
-    nodeVersion: '22'
+    test: 'pnpm test:ember'
   },
   /* {
     name: 'ember-provide-consume-context',
@@ -90,7 +84,6 @@ export const config: Entry[] = [
     setup: 'pnpm install',
     build: { run: 'pnpm build', directory: 'packages/ember-simple-auth' },
     testDir: 'packages/test-app',
-    test: 'pnpm test',
-    nodeVersion: '22'
+    test: 'pnpm test'
   },
 ]
