@@ -2,6 +2,16 @@ export type Command = string | {
   run: string;
   directory: string;
 }
+/**
+ * Phase order specified in the GH workflows
+ * 1. Clone
+ * 2. Setup
+ * 3. Build
+ * 4. Install ember-source / apply try config
+ * 5. Verify ember-source is correct
+ * 6. Prepare Test
+ * 7. Test
+ */
 export interface Entry {
   // This will show up in the CI matrix
   name: string;
@@ -17,6 +27,9 @@ export interface Entry {
   test: string;
   // Optionally directory to run the 'test' command in.
   testDir?: string;
+  // Optionally, read the repo's try config, and merge with our local copy of dependencies
+  // If specified, this is applied after build.
+  try?: { scenarioName: string, directory?: string }
 }
 export const config: Entry[] = [
   {
@@ -31,9 +44,12 @@ export const config: Entry[] = [
     repo: 'https://github.com/emberjs/ember-test-helpers.git',
     setup: 'pnpm install',
     build: { directory: 'addon', run: 'pnpm build' },
-    prepareTest: 'pnpm i -f',
     testDir: 'test-app',
-    test: 'pnpm test:ember'
+    test: 'pnpm test:ember',
+    try: {
+      directory: 'test-app',
+      scenarioName: 'ember-canary',
+    },
   },
   // Disabled because our CI's proto tool isn't active
   // when we invoke commands via execa
