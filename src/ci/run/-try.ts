@@ -24,6 +24,8 @@ export async function getTryDependencies(): Promise<void | Record<string, string
   for (let candidateTry of candidateFiles) {
     let filePath = join(sourceDirectory, candidateTry);
 
+    console.log({ filePath });
+
     let { default: fn } = await import(filePath);
     let tryConfig = await fn();
 
