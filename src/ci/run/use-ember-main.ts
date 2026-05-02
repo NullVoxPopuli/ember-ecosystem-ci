@@ -6,6 +6,7 @@ import { detectPackageManager } from "nypm";
 import assert from "node:assert";
 import { existsSync } from "node:fs";
 import { packageJson } from "ember-apply";
+import { getTryDependencies } from "./-try.ts";
 
 const prebuiltTgzName = 'ember-source-main.tgz';
 
@@ -42,17 +43,24 @@ export async function useEmberMain() {
 
     let specifier = `file:${tgzPath}`;
 
+    let tryDeps = await getTryDependencies();
+
     function mutateJson(json: any) {
       json.pnpm ||= {};
       json.pnpm.overrides ||= {};
       json.overrides ||= {};
       json.resolutions ||= {};
+      json.devDependencies ||= {};
+
+      if (tryDeps) {
+        Object.assign(json.devDependencies, tryDeps);
+      }
 
       json.pnpm.overrides['ember-source'] = specifier;
       json.overrides['ember-source'] = specifier;
       json.resolutions['ember-source'] = specifier;
 
-      if (json.devDependencies?.['ember-source']) {
+      if (json.devDependencies['ember-source']) {
         json.devDependencies['ember-source'] = specifier;
       }
       if (json.dependencies?.['ember-source']) {
