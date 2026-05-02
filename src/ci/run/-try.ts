@@ -22,12 +22,18 @@ export async function getTryDependencies(): Promise<void | Record<string, string
 
   let sourceDirectory = config.try.directory || config.state.dirToTestIn;
   for (let candidateTry of candidateFiles) {
-    let filePath = join(sourceDirectory, candidateTry);
+    let filePath = join(config.state.cloneDir, sourceDirectory, candidateTry);
 
     console.log({ filePath });
 
-    let { default: fn } = await import(filePath);
-    let tryConfig = await fn();
+    try {
+      let { default: fn } = await import(filePath);
+      var tryConfig = await fn();
+    } catch (e) {
+      console.info(`Error occurred while trying to see if ${filePath} is evaluatable`);
+      console.error(e);
+      return;
+    }
 
     let scenarios = tryConfig.scenarios;
 
