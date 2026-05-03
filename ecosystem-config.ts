@@ -102,4 +102,12 @@ export const config: Entry[] = [
     testDir: 'packages/test-app',
     test: 'pnpm test'
   },
+  {
+    name: 'ember-intl',
+    repo: 'https://github.com/ember-intl/ember-intl',
+    setup: 'pnpm install',
+    build: 'pnpm build',
+    testDir: 'tests/ember-intl',
+    test: 'pnpm test',
+  },
 ]
