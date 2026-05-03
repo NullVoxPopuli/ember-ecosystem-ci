@@ -94,14 +94,15 @@ export const config: Entry[] = [
   //   testDir: 'test-app',
   //   test: 'pnpm test'
   // },
-  {
-    name: 'ember-simple-auth',
-    repo: 'https://github.com/mainmatter/ember-simple-auth.git',
-    setup: 'pnpm install',
-    build: { run: 'pnpm build', directory: 'packages/ember-simple-auth' },
-    testDir: 'packages/test-app',
-    test: 'pnpm test'
-  },
+  // Disabled because this repo needs a lot of maintenance to be green against canary
+  // {
+  //   name: 'ember-simple-auth',
+  //   repo: 'https://github.com/mainmatter/ember-simple-auth.git',
+  //   setup: 'pnpm install',
+  //   build: { run: 'pnpm build', directory: 'packages/ember-simple-auth' },
+  //   testDir: 'packages/test-app',
+  //   test: 'pnpm test'
+  // },
   {
     name: 'ember-intl',
     repo: 'https://github.com/ember-intl/ember-intl',
